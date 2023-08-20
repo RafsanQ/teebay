@@ -77,6 +77,7 @@ export default {
     },
 
     addCategory: async (args) => {
+        console.log("Hello");
         const { productId, categoryId } = args
         try{
             const updatedProduct = await prisma.product.update({
@@ -95,10 +96,25 @@ export default {
                     }
                 },
                 include: {
-                    categories: true
+                    categories: {
+                        include: {
+                            category: true
+                        }
+                    }
                 }
             });
-            console.log("Category added", updatedProduct);
+
+            // // Because the required category information is nested, we flatten it and remove the redundant junction table values.
+            // updatedProduct.forEach(product => {
+            //     product.categories.forEach(thisElement => {
+            //         thisElement.id = thisElement.category.id;
+            //         thisElement.title = thisElement.category.title;
+            //         delete thisElement.category;
+            //         delete thisElement.productId;
+            //         delete thisElement.categoryId;
+            //     })
+            // });
+            // console.log(JSON.stringify(updatedProduct, null, 4));
             return updatedProduct;
         }catch(error){
             console.error(error);
