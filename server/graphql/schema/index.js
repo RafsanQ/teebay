@@ -18,6 +18,15 @@ export default buildSchema(`
         phone: String
     }
 
+   
+    input ProductInput {
+        title: String!
+        description: String
+        price: Int
+        rentPrice: Int
+        rentDuration: String
+    }
+
     type Product {
         id: ID!
         title: String!
@@ -26,16 +35,14 @@ export default buildSchema(`
         rentPrice: Int
         rentDuration: String
         created_at: String!
-        ownerId: User!
+        owner: User!
+        categories: [Category] 
     }
 
-    input ProductInput {
-        title: String!
-        description: String
-        price: Int
-        rentPrice: Int
-        rentDuration: String
-
+    type Category {
+        id: ID!
+        title: String
+        created_at: String!
     }
 
     type RootQuery {
@@ -45,6 +52,7 @@ export default buildSchema(`
 
     type RootMutation {
         createProduct(productInput: ProductInput): Product
+        addCategory(productId: Int, categoryId: Int): Product
         createUser(userInput: UserInput): User
     }
 

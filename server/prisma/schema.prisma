@@ -22,21 +22,16 @@ model User {
 }
 
 model Product {
-  id          Int    @id @default(autoincrement())
-  title       String @unique
-  description String
-
-  price Int @default(99)
-
-  rentPrice    Int    @default(19)
+  id           Int                   @id @default(autoincrement())
+  title        String                @unique
+  description  String
+  price        Int                   @default(99)
+  rentPrice    Int                   @default(19)
   rentDuration String
-
-  created_at DateTime @default(now())
-
-  owner   User @relation(fields: [ownerId], references: [id])
-  ownerId Int
-
-  categories CatagoriesOnProduct[]
+  created_at   DateTime              @default(now())
+  owner        User                  @relation(fields: [ownerId], references: [id])
+  ownerId      Int
+  categories   CatagoriesOnProduct[]
 }
 
 model Catagory {

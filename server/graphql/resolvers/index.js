@@ -1,11 +1,32 @@
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
-
 export default {
     products: async () => {
         try{
-            const products = await prisma.product.findMany();
+            let products = await prisma.product.findMany({
+                include: {
+                    owner: true,
+                    categories: {
+                        include: {
+                            category: true
+                        }
+                    }
+                    
+                }
+            });
+
+            // Because the required category information is nested, we flatten it and remove the redundant junction table values.
+            products.forEach(product => {
+                product.categories.forEach(thisElement => {
+                    thisElement.id = thisElement.category.id;
+                    thisElement.title = thisElement.category.title;
+                    delete thisElement.category;
+                    delete thisElement.productId;
+                    delete thisElement.categoryId;
+                })
+            });
+
             return products;
         }catch(error){
             console.error(error);
@@ -26,7 +47,7 @@ export default {
 
     createProduct: async (args) => {
         try{
-            const prodcut = await prisma.product.create({
+            const product = await prisma.product.create({
                 data: {
                     title: args.productInput.title,
                     description: args.productInput.description,
@@ -35,11 +56,50 @@ export default {
                     rentDuration: args.productInput.rentDuration,
                     created_at: new Date().toISOString(),
                     // ownerId: args.productInput.ownerId
-                    ownerId: 2
+                    ownerId: 2,
+                    // categories: {
+                    //     create: [
+                    //         {
+                    //             category: {
+                    //                 id: 2
+                    //             }
+                    //         }
+                    //     ]
+                    // }
                 }
               })
-              console.log("Product created", prodcut);
-              return prodcut;
+              console.log("Product created", product);
+              return product;
+        }catch(error){
+            console.error(error);
+            throw error;
+        }
+    },
+
+    addCategory: async (args) => {
+        const { productId, categoryId } = args
+        try{
+            const updatedProduct = await prisma.product.update({
+                where: {
+                    id: productId
+                },
+                data: {
+                    categories: {
+                        create: {
+                            category: {
+                                connect: {
+                                    id: categoryId
+                                },
+                            }
+                        }
+                    }
+                },
+                include: {
+                    categories: true
+                }
+            });
+            console.log("Category added", updatedProduct);
+            return updatedProduct;
         }catch(error){
             console.error(error);
             throw error;
