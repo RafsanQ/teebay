@@ -7,7 +7,7 @@ export default buildSchema(`
         password: String!
         email: String!
         address: String
-        phone: String
+        phoneNumber: String
     }
 
     input UserInput {
@@ -26,6 +26,7 @@ export default buildSchema(`
         rentPrice: Int
         rentDuration: String
         created_at: String!
+        ownerId: User!
     }
 
     input ProductInput {
@@ -34,10 +35,12 @@ export default buildSchema(`
         price: Int
         rentPrice: Int
         rentDuration: String
+
     }
 
     type RootQuery {
         products: [Product!]!
+        users: [User!]!
     }
 
     type RootMutation {
