@@ -1,6 +1,6 @@
-const { buildSchema } = require('graphql');
+import { buildSchema } from 'graphql'
 
-module.exports = buildSchema(`
+export default buildSchema(`
     type Product {
         id: ID!
         title: String!

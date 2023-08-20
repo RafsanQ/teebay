@@ -1,12 +1,14 @@
-const express = require('express');
-const createError = require('http-errors');
-const morgan = require('morgan');
-require('dotenv').config();
+import express from 'express';
+import createError from 'http-errors';
+import morgan from 'morgan';
 
-const { graphqlHTTP } = require('express-graphql');
+import dotenv from 'dotenv';
+dotenv.config();
 
-const graphqlSchema = require('./graphql/schema');
-const graphqlResolvers = require('./graphql/resolvers');
+import { graphqlHTTP } from 'express-graphql';
+
+import graphqlSchema from './graphql/schema/index.js'
+import graphqlResolvers from './graphql/resolvers/index.js'
 
 const app = express();
 app.use(express.json());
@@ -24,7 +26,7 @@ app.use('/graphql', graphqlHTTP({
   graphiql: true
 }))
 
-app.use('/api', require('./routes/api.route'));
+// app.use('/api', require('./routes/api.route'));
 
 app.use((req, res, next) => {
   next(createError.NotFound());

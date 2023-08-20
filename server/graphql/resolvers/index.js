@@ -1,13 +1,14 @@
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
 
-const products = [];
 
-module.exports = {
-    products: () => {
-      return products;
+export default {
+    products: async () => {
+        const products = await prisma.product.findMany()
+        return products;
     },
     createProduct: (args) => {
       const prodcut = {
-        id: Math.random().toString(),
         title: args.productInput.title,
         description: args.productInput.description,
         price: args.productInput.price,
