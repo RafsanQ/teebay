@@ -4,7 +4,9 @@ const morgan = require('morgan');
 require('dotenv').config();
 
 const { graphqlHTTP } = require('express-graphql');
-const { buildSchema } = require('graphql');
+
+const graphqlSchema = require('./graphql/schema');
+const graphqlResolvers = require('./graphql/resolvers');
 
 const app = express();
 app.use(express.json());
@@ -15,62 +17,12 @@ app.get('/', async (req, res, next) => {
   res.send({ message: 'Awesome it works 🐻' });
 });
 
-const products = [];
 
 app.use('/graphql', graphqlHTTP({
-  schema: buildSchema(`
-      type Product {
-        id: ID!
-        title: String!
-        description: String
-        price: Int
-        rentPrice: Int
-        rentDuration: String
-        created_at: String!
-      }
-
-      input ProductInput {
-        title: String!
-        description: String
-        price: Int
-        rentPrice: Int
-        rentDuration: String
-      }
-
-      type RootQuery {
-        products: [Product!]!
-
-      }
-
-      type RootMutation {
-        createProduct(productInput: ProductInput): Product
-      }
-
-      schema {
-        query: RootQuery
-        mutation: RootMutation
-      }
-  `),
-  rootValue: {
-    products: () => {
-      return products;
-    },
-    createProduct: (args) => {
-      const prodcut = {
-        id: Math.random().toString(),
-        title: args.productInput.title,
-        description: args.productInput.description,
-        price: args.productInput.price,
-        rentPrice: args.productInput.rentPrice,
-        rentDuration: args.productInput.rentDuration,
-        created_at: new Date().toISOString()
-      }
-      products.push(prodcut);
-      return prodcut;
-    }
-  },
+  schema: graphqlSchema,
+  rootValue: graphqlResolvers,
   graphiql: true
-}) )
+}))
 
 app.use('/api', require('./routes/api.route'));
 
