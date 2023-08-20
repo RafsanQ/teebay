@@ -10,24 +10,39 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+model User {
+  id          Int    @id @default(autoincrement())
+  name        String
+  password    String
+  email       String @unique
+  address     String
+  phoneNumber String
+
+  ownedProducts Product[]
+
+}
 model Product {
-  id            Int         @id @default(autoincrement())
-  title         String      @unique
-  description   String
+  id          Int    @id @default(autoincrement())
+  title       String @unique
+  description String
 
-  price         Int         @default(99)
+  price Int @default(99)
 
-  rentPrice     Int         @default(19)
-  rentDuration  String
+  rentPrice    Int    @default(19)
+  rentDuration String
 
-  created_at    DateTime    @default(now())
+  created_at DateTime @default(now())
 
-  categories    CatagoriesOnProduct[]
+  owner    User  @relation(fields: [ownerId], references: [id])
+  ownerId  Int
+
+  categories CatagoriesOnProduct[]
 }
 
 model Catagory {
   id         Int      @id @default(autoincrement())
-  name       String   @unique
+  title      String   @unique
   created_at DateTime @default(now())
 
   products CatagoriesOnProduct[]
