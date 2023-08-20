@@ -1,6 +1,23 @@
 import { buildSchema } from 'graphql'
 
 export default buildSchema(`
+    type User {
+        id: ID!
+        name: String!
+        password: String!
+        email: String!
+        address: String
+        phone: String
+    }
+
+    input UserInput {
+        name: String!
+        password: String!
+        email: String!
+        address: String
+        phone: String
+    }
+
     type Product {
         id: ID!
         title: String!
@@ -25,6 +42,7 @@ export default buildSchema(`
 
     type RootMutation {
         createProduct(productInput: ProductInput): Product
+        createUser(userInput: UserInput): User
     }
 
     schema {
