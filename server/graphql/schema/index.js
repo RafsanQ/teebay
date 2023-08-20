@@ -54,6 +54,8 @@ export default buildSchema(`
         createProduct(productInput: ProductInput): Product
         addCategory(productId: Int, categoryId: Int): Product
         createUser(userInput: UserInput): User
+        deleteProduct(productId: Int): Product
+        
     }
 
     schema {

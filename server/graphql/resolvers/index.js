@@ -77,7 +77,6 @@ export default {
     },
 
     addCategory: async (args) => {
-        console.log("Hello");
         const { productId, categoryId } = args
         try{
             const updatedProduct = await prisma.product.update({
@@ -116,6 +115,23 @@ export default {
             // });
             // console.log(JSON.stringify(updatedProduct, null, 4));
             return updatedProduct;
+        }catch(error){
+            console.error(error);
+            throw error;
+        }
+    },
+
+    deleteProduct: async (args) => {
+        try{
+            const deletedProduct = await prisma.product.delete({
+                where: {
+                    id: args.productId
+                },
+                include: {
+                    owner: true,
+                }
+            })
+            return deletedProduct;
         }catch(error){
             console.error(error);
             throw error;
