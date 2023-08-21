@@ -1,5 +1,7 @@
 .App{
   background: white;
-  min-width: 90vw;
-  min-height: 90vh;
+  min-width: 95vw;
+  min-height: 95vh;
+  margin: 0;
+  padding: 0;
 }

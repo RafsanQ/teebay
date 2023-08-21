@@ -1,0 +1,9 @@
+.card{
+    width: clamp(70%, 70%, 40%);
+    padding: 50px;
+    border: 2px solid rgb(179, 179, 179);
+    margin: 0% auto 5% auto;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
