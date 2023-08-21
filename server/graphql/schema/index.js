@@ -1,6 +1,12 @@
 import { buildSchema } from 'graphql'
 
 export default buildSchema(`
+    type AuthData {
+        userId: ID!
+        token: String!
+        tokenExpiration: Int!
+    }
+
     type User {
         id: ID!
         name: String!
@@ -50,6 +56,7 @@ export default buildSchema(`
         products: [Product!]!
         getSingleProduct (productId: Int): Product!
         users: [User!]!
+        loginUser (email: String, password: String): AuthData! 
     }
 
     type RootMutation {
