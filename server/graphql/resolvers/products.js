@@ -78,7 +78,10 @@ export default {
         }
     },
 
-    createProduct: async (args) => {
+    createProduct: async (args, req) => {
+        if(!req.isAuth){
+            throw new Error("Unauthenticated");
+        }
         try{
             const product = await prisma.product.create({
                 data: {

@@ -10,6 +10,8 @@ import { graphqlHTTP } from 'express-graphql';
 import graphqlSchema from './graphql/schema/index.js'
 import graphqlResolvers from './graphql/resolvers/index.js'
 
+import isAuthorised from './middleware/auth.js';
+
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -19,6 +21,8 @@ app.get('/', async (req, res, next) => {
   res.send({ message: 'Awesome it works 🐻' });
 });
 
+// Middleware to check token
+app.use(isAuthorised)
 
 app.use('/graphql', graphqlHTTP({
   schema: graphqlSchema,
@@ -27,6 +31,7 @@ app.use('/graphql', graphqlHTTP({
 }))
 
 // app.use('/api', require('./routes/api.route'));
+
 
 app.use((req, res, next) => {
   next(createError.NotFound());
