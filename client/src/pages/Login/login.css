@@ -1,5 +1,5 @@
 .card{
-    width: clamp(60%, 60%, 40%);
+    width: clamp(30%, 25%, 20%);
     padding: 2% 10%;
     border: 2px solid rgb(204, 204, 204);
     margin: 0% auto 5% auto;

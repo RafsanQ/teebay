@@ -7,11 +7,10 @@ import './login.css'
 
 export function LoginPage(){
 
-    const [isLogginPage, setIsLogginPage] = useState(true);
+    const [isLogginPage, setIsLogginPage] = useState(false);
     
     const handleScreenChange = () => {
         setIsLogginPage(!isLogginPage);
-        console.log(isLogginPage);
     }
 
     if(isLogginPage){

@@ -9,9 +9,14 @@ body {
 .pageTitle{
   font-family: Arial;
   font-weight: lighter;
-  margin: 10% auto 1% auto;
+  margin: 10% auto 2% auto;
   align-items: center;
   text-align: center;
   justify-content: center;
   text-transform: uppercase
+}
+
+.inputText{
+  border: 2px solid rgb(204, 204, 204);
+  border-radius: 0.25rem;
 }
