@@ -1,12 +1,91 @@
-# query{
-#   products {
+# mutation{
+#   addCategory(productId: 5, categoryId: 2){
 #     id,
 #     title,
 #     description,
-# 		price,
-# 		owner {
-# 		  id,
+#     created_at,
+#     owner{
 #       email
 #     },
+#     categories{
+#       id,
+#       title
+#     }
+#   }
+# }
+
+# query{
+#   getSingleProduct(productId: 5){
+#     id,
+#     title,
+#     description,
+#     created_at,
+#     owner{
+#       email
+#     },
+#     categories{
+#       id,
+#       title
+#     }
+#   }
+# }
+
+query{
+  users {
+    id,
+    name,
+    email
+  }
+  # loginUser(email: "rafs2an.quayes@gmail.com", password: "9cd4c26428"){
+  #   userId,
+  #   token,
+  #   tokenExpiration
+  # }
+}
+
+# mutation{
+#   deleteProduct(productId: 1){
+#     id,
+#     title,
+#     description,
+#     created_at,
+
+#   }
+# }
+
+# mutation {
+#   createProduct(productInput: {title: "Laptop 2", description: "Typical Laptop", price: 60000, rentPrice: 800, rentDuration: "day", userId: 1}){
+# 		id,
+#     title,
+#     owner{
+#       id
+#     }
+#   }
+# }
+
+# mutation {
+#   createUser(userInput: {name: "rafsan", password: "123456", email: "rafsan.quayes@gmail.com", address: "Bd", phone: "12345678910"}){
+#     id,
+#     name,
+#     email
+#   }
+# }
+
+
+# query{
+#   products{
+#     id,
+#     title,
+#     description,
+#     created_at,
+#     owner{
+#       email
+#     },
+#     categories {
+#       id,
+#       title,
+#       created_at
+#     }
+
 #   }
 # }
