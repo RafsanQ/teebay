@@ -35,6 +35,39 @@ export default {
         
     },
 
+    getSingleProduct: async (args) => {
+        try{
+            console.log(args.productId);
+            const product = await prisma.product.findUnique({
+                where: {
+                    id: args.productId
+                },
+                include: {
+                    owner: true,
+                    categories: {
+                        include: {
+                            category: true
+                        }
+                    }
+                }
+            })
+
+             // Because the required category information is nested, we flatten it and remove the redundant junction table values.
+            product.categories.forEach(thisElement => {
+                thisElement.id = thisElement.category.id;
+                thisElement.title = thisElement.category.title;
+                delete thisElement.category;
+                delete thisElement.productId;
+                delete thisElement.categoryId;
+            })
+
+            return product;
+        }catch(error){
+            console.error(error);
+            throw error;
+        }
+    },
+
     users: async () => {
         try{
             const users = await prisma.user.findMany();
@@ -57,15 +90,10 @@ export default {
                     created_at: new Date().toISOString(),
                     // ownerId: args.productInput.ownerId
                     ownerId: 2,
-                    // categories: {
-                    //     create: [
-                    //         {
-                    //             category: {
-                    //                 id: 2
-                    //             }
-                    //         }
-                    //     ]
-                    // }
+
+                },
+                include: {
+                    owner: true
                 }
               })
               console.log("Product created", product);
@@ -95,6 +123,7 @@ export default {
                     }
                 },
                 include: {
+                    owner: true,
                     categories: {
                         include: {
                             category: true
@@ -103,18 +132,42 @@ export default {
                 }
             });
 
-            // // Because the required category information is nested, we flatten it and remove the redundant junction table values.
-            // updatedProduct.forEach(product => {
-            //     product.categories.forEach(thisElement => {
-            //         thisElement.id = thisElement.category.id;
-            //         thisElement.title = thisElement.category.title;
-            //         delete thisElement.category;
-            //         delete thisElement.productId;
-            //         delete thisElement.categoryId;
-            //     })
-            // });
+            // Because the required category information is nested, we flatten it and remove the redundant junction table values.
+            updatedProduct.categories.forEach(thisElement => {
+                thisElement.id = thisElement.category.id;
+                thisElement.title = thisElement.category.title;
+                delete thisElement.category;
+                delete thisElement.productId;
+                delete thisElement.categoryId;
+            })
+
             // console.log(JSON.stringify(updatedProduct, null, 4));
             return updatedProduct;
+        }catch(error){
+            console.error(error);
+            throw error;
+        }
+    },
+
+    updateProduct: async (args) => {
+        try{
+            const product = await prisma.product.update({
+                where: {
+                    id: args.productId
+                },
+                data: {
+                    title: args.productInput.title,
+                    description: args.productInput.description,
+                    price: args.productInput.price,
+                    rentPrice: args.productInput.rentPrice,
+                    rentDuration: args.productInput.rentDuration,
+                    created_at: new Date().toISOString(),
+                    // ownerId: args.productInput.ownerId
+                    ownerId: 2,
+                }
+              })
+              console.log("Product updated", product);
+              return product;
         }catch(error){
             console.error(error);
             throw error;

@@ -25,6 +25,7 @@ export default buildSchema(`
         price: Int
         rentPrice: Int
         rentDuration: String
+        userId: Int
     }
 
     type Product {
@@ -47,15 +48,16 @@ export default buildSchema(`
 
     type RootQuery {
         products: [Product!]!
+        getSingleProduct (productId: Int): Product!
         users: [User!]!
     }
 
     type RootMutation {
         createProduct(productInput: ProductInput): Product
         addCategory(productId: Int, categoryId: Int): Product
-        createUser(userInput: UserInput): User
+        updateProduct(productId: Int, productInput: ProductInput): Product
         deleteProduct(productId: Int): Product
-        
+        createUser(userInput: UserInput): User
     }
 
     schema {
