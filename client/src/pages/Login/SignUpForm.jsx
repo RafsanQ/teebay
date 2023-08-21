@@ -1,4 +1,4 @@
-import { TextInput, Button, PasswordInput } from '@mantine/core';
+import { TextInput, Button, PasswordInput, Grid  } from '@mantine/core';
 import { useForm } from '@mantine/form';
 ;
 
@@ -29,22 +29,28 @@ export function SignUpForm(props){
             <h1 className='pageTitle'>Sign Up</h1>
             <div className='card'>
                 <form form onSubmit={form.onSubmit((values) => console.log(values))}>
-                    <TextInput variant="unstyled" className='inputText '
-                        placeholder="First Name"
-                        {...form.getInputProps('firstName')}
-                    />
-                    <br />
-                    <TextInput variant="unstyled" className='inputText '
-                        placeholder="Last Name"
-                        {...form.getInputProps('lastName')}
-                    />
+                    <Grid gutter={20}>
+                        <Grid.Col span={6}>
+                            <TextInput variant="unstyled" className='inputText'
+                                placeholder="First Name"
+                                {...form.getInputProps('firstName')}
+                            />
+                        </Grid.Col>
+                            
+                        <Grid.Col span={6}>
+                            <TextInput variant="unstyled" className='inputText'
+                                placeholder="Last Name"
+                                {...form.getInputProps('lastName')}
+                            />
+                        </Grid.Col>
+                    </Grid>
                     <br />
                     <TextInput variant="unstyled" className='inputText '
                         placeholder="Address"
                         {...form.getInputProps('address')}
                     />
                     <br />
-                    <TextInput variant="unstyled" className='inputText '
+                    <TextInput variant="unstyled" className='inputText'
                         placeholder="Email"
                         {...form.getInputProps('email')}
                     />

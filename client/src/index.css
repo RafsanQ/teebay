@@ -19,4 +19,5 @@ body {
 .inputText{
   border: 2px solid rgb(204, 204, 204);
   border-radius: 0.25rem;
+  padding: 1% 3%;
 }
