@@ -1,9 +1,15 @@
 .card{
-    width: clamp(70%, 70%, 40%);
-    padding: 50px;
-    border: 2px solid rgb(179, 179, 179);
+    width: clamp(60%, 60%, 40%);
+    padding: 2% 10%;
+    border: 2px solid rgb(204, 204, 204);
     margin: 0% auto 5% auto;
     align-items: center;
     text-align: center;
     justify-content: center;
+}
+
+.changerButton{
+    cursor: pointer;
+    color: rgb(0, 68, 255);
+    font-weight: bold;
 }
