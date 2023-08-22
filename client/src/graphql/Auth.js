@@ -9,3 +9,12 @@ query getAuth($email: String!, $password: String!){
   }
 }
 `
+
+export const CREATE_NEW_USER = gql`
+mutation createNewUser($name: String!, $address: String!, $email: String!, $phoneNumber: String!, $password: String!){
+    createUser(userInput: {name: $name, address: $address, email: $email, phone: $phoneNumber, password: $password}){
+        id
+    }
+    
+}
+`

@@ -8,7 +8,6 @@ import { GET_AUTH } from '../../graphql/Auth.js';
 
 export function SignInForm(props){
     const navigate = useNavigate();
-
     const [signInUser, { error, data, loading }] = useLazyQuery(GET_AUTH, {
         onCompleted(data, error){
             if(error){
@@ -21,8 +20,6 @@ export function SignInForm(props){
     });
 
     async function handleLogin(values){
-        console.log(values);
-
         await signInUser({
             variables: {
                 email: values.email,
@@ -40,8 +37,12 @@ export function SignInForm(props){
             });
         }
 
+        // if(loading){
+        //     return <h2>Signing In</h2>
+        // }
+
         if(data){
-            toast('Sing in successful', {
+            toast('Sign in successful', {
                 style: {
                     backgroundColor: 'green',
                     color: 'white'
