@@ -1,6 +1,7 @@
 
 export function ProductCard({product}){
 
+    const ownerId = product.owner.id;
     const productTitle = product.title;
     const categories = product.categories || [];
     const description = product.description;
@@ -9,8 +10,19 @@ export function ProductCard({product}){
     const rentDuration = product.rentDuration;
     const datePosted = product.created_at;
 
+    let trashCanButton = null;
+    if(ownerId == localStorage.getItem('userId')) {
+        console.log('same owner', ownerId);
+        trashCanButton = (
+            <img src="/trash-bin.png" width={20} height={25} alt="Logo" />
+        );
+    }
+
     return (
         <div className="card">
+            <div className="rightSide">
+                {trashCanButton}
+            </div>
             <div className="leftSide">
                 <h2>{productTitle}</h2>
                 <div>
@@ -30,6 +42,7 @@ export function ProductCard({product}){
   
                 <p className="date">Date posted: {datePosted}</p>
             </div>
+            
         </div>
     )
 }

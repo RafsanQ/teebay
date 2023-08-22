@@ -36,7 +36,7 @@ export function UserProductsPage(){
                     </Button>
                 </Link>
             </div>
-            <h2 className="pageTitle">All Products</h2>
+            <h2 className="pageTitle">My Products</h2>
 
             {products.map(product => (
                 <ProductCard key={product.id} product={product}/>

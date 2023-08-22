@@ -30,6 +30,7 @@
 }
 
 .card .rightSide{
+  margin: 10% 5%;
   text-align: right;
   float: right;
 }
