@@ -1,25 +1,50 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ApolloProvider } from "@apollo/client";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { gql, useQuery } from "@apollo/client";
 
 import { LoginPage } from "./pages/Login"
 import { AllProductsPage } from "./pages/AllProducts"
-import { client } from "./graphql/client";
 
 
 import './App.css';
 
+const IS_LOGGED_IN = gql`
+  query IsUserLoggedIn {
+    isLoggedIn @client
+  }
+`;
 
 function App() {
+
+  
+  const { data, loading, error } = useQuery(IS_LOGGED_IN);
+
+  if(loading){
+    return(
+      <div className="App">
+          Loading
+      </div>
+    )
+  }
+
+  if(error){
+    return(
+      <div className="App">
+          Error
+      </div>
+    )
+  }
+
+  const isLoggedIn = data.isLoggedIn;
+  console.log({isLoggedIn});
+
   return (
     <div className="App">
-      <ApolloProvider client={client}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<LoginPage />} />
-            <Route path="/products" element={<AllProductsPage />} />
+            <Route path="/" element={!isLoggedIn ? <LoginPage /> : <Navigate to='/products' /> } />
+            <Route path="/products" element={!isLoggedIn ? <Navigate to='/' /> : <AllProductsPage />} />
           </Routes>
         </BrowserRouter>
-      </ApolloProvider>
     </div>
   );
 }
