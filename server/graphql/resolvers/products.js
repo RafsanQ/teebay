@@ -35,9 +35,22 @@ export default {
         
     },
 
+    productsOwnedBy : async (args) => {
+        try{
+            const products = await prisma.product.findMany({
+                where: {
+                    ownerId: args.ownerId
+                }
+            })
+            return products;
+        }catch(error){
+            console.error(error);
+            throw error;
+        }
+    },
+
     getSingleProduct: async (args) => {
         try{
-            console.log(args.productId);
             const product = await prisma.product.findUnique({
                 where: {
                     id: args.productId

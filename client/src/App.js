@@ -1,17 +1,13 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { gql, useQuery } from "@apollo/client";
-
+import { useQuery } from "@apollo/client";
+import { IS_LOGGED_IN } from "./graphql/Auth.js";
 import { LoginPage } from "./pages/Login"
 import { AllProductsPage } from "./pages/AllProducts"
 
 
 import './App.css';
 
-const IS_LOGGED_IN = gql`
-  query IsUserLoggedIn {
-    isLoggedIn @client
-  }
-`;
+
 
 function App() {
 
@@ -35,14 +31,13 @@ function App() {
   }
 
   const isLoggedIn = data.isLoggedIn;
-  console.log({isLoggedIn});
 
   return (
     <div className="App">
         <BrowserRouter>
           <Routes>
             <Route path="/" element={!isLoggedIn ? <LoginPage /> : <Navigate to='/products' /> } />
-            <Route path="/products" element={!isLoggedIn ? <Navigate to='/' /> : <AllProductsPage />} />
+            <Route path="/products" element={isLoggedIn ? <AllProductsPage /> : <Navigate to='/' />} />
           </Routes>
         </BrowserRouter>
     </div>

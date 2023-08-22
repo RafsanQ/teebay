@@ -55,6 +55,7 @@ export default buildSchema(`
     type RootQuery {
         products: [Product!]!
         getSingleProduct (productId: Int): Product!
+        productsOwnedBy (ownerId: Int): [Product!]
         users: [User!]!
         loginUser (email: String, password: String): AuthData! 
     }
