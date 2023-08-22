@@ -1,23 +1,24 @@
 
+export function ProductCard({product}){
 
-export function ProductCard(props){
+    const productTitle = product.title;
+    const categories = product.categories;
+    const description = product.description;
+    const price = product.price;
+    const rentPrice = product.rentPrice;
+    const rentDuration = product.rentDuration;
+    const datePosted = product.created_at;
 
-    const productTitle = props.productTitle;
-    const categories = props.categories;
-    const description = props.description;
-    const price = props.price;
-    const rentPrice = props.rentPrice;
-    const rentDuration = props.rentDuration;
-    const datePosted = props.dateCreated;
+    console.log( {productTitle, categories, description, price, rentPrice, rentDuration, datePosted} );
 
     return (
         <div className="card">
             <h3>{productTitle}</h3>
             <br />
             <p>Categories: </p>
-            {categories.map(category => (
+            {/* {categories.map(category => (
                 <p>{category}, </p>
-            ))}
+            ))} */}
             <br />
             <p>Price: ${price} | Rent: ${rentPrice} {rentDuration}ly</p>
             <br />
