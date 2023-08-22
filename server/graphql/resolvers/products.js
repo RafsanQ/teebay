@@ -11,8 +11,7 @@ export default {
                         include: {
                             category: true
                         }
-                    }
-                    
+                    }     
                 }
             });
 
@@ -37,11 +36,32 @@ export default {
 
     productsOwnedBy : async (args) => {
         try{
+            console.log(args.ownerId);
             const products = await prisma.product.findMany({
                 where: {
                     ownerId: args.ownerId
+                },
+                include: {
+                    owner: true,
+                    categories: {
+                        include: {
+                            category: true
+                        }
+                    } 
                 }
             })
+
+            // Because the required category information is nested, we flatten it and remove the redundant junction table values.
+            products.forEach(product => {
+                product.categories.forEach(thisElement => {
+                    thisElement.id = thisElement.category.id;
+                    thisElement.title = thisElement.category.title;
+                    delete thisElement.category;
+                    delete thisElement.productId;
+                    delete thisElement.categoryId;
+                })
+            });
+
             return products;
         }catch(error){
             console.error(error);

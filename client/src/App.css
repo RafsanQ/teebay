@@ -72,3 +72,7 @@
   float: right;
   margin: 1% 5% ;
 }
+
+.rightSideButtons button{
+  width: 100%;
+}

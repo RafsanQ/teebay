@@ -1,38 +1,41 @@
-import { useQuery } from "@apollo/client";
+import { useQuery, gql } from "@apollo/client";
 import { Button } from '@mantine/core';
 import { Link } from "react-router-dom";
 import { ProductCard } from "../../components/ProductCard";
 import { LogOutButton } from "../../components/LogOutButton";
-import { GET_PRODUCTS } from "../../graphql/Products.js"
-
-export function AllProductsPage(){
+import { GET_PRODUCTS_BY_USER } from "../../graphql/Products";
 
 
 
+export function UserProductsPage(){
 
-
-    const { error, data, loading } = useQuery(GET_PRODUCTS);
+    
+    let { error, loading, data } = useQuery(GET_PRODUCTS_BY_USER, {
+        variables: {
+            userId: parseInt(localStorage.getItem("userId"))
+        }
+    });
     
 
     if(loading) return <div className="card">Loading...</div>
 
-    if(error) return <div className="card">Error</div>
+    if(error) return <div className="card">Error <p>{error.message}</p> </div>
 
-    const products = data.products || [];
+    const products = data.productsOwnedBy || [];
 
-    console.log({products: products})
+    console.log({products})
 
     return (
         <div>
             <div className="rightSideButtons">
                 <LogOutButton />
-                <Link to="/userproducts">
+                
+                <Link to="/products">
                     <Button className='rightSideButtons' color="red" uppercase>
-                        My Products
+                        All Products
                     </Button>
                 </Link>
             </div>
-            
             <h2 className="pageTitle">All Products</h2>
 
             {products.map(product => (

@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client";
 import { IS_LOGGED_IN } from "./graphql/Auth.js";
 import { LoginPage } from "./pages/Login"
 import { AllProductsPage } from "./pages/AllProducts"
-
+import { UserProductsPage } from "./pages/UserProducts"
 
 import './App.css';
 
@@ -38,6 +38,7 @@ function App() {
           <Routes>
             <Route path="/" element={!isLoggedIn ? <LoginPage /> : <Navigate to='/products' /> } />
             <Route path="/products" element={isLoggedIn ? <AllProductsPage /> : <Navigate to='/' />} />
+            <Route path="/userproducts" element={isLoggedIn ? <UserProductsPage /> : <Navigate to='/' />} />
           </Routes>
         </BrowserRouter>
     </div>
