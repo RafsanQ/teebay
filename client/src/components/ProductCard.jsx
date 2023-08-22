@@ -11,7 +11,7 @@ export function ProductCard({product}){
     const datePosted = product.created_at;
 
     let trashCanButton = null;
-    if(ownerId == localStorage.getItem('userId')) {
+    if(ownerId === localStorage.getItem('userId')) {
         console.log('same owner', ownerId);
         trashCanButton = (
             <img src="/trash-bin.png" width={20} height={25} alt="Logo" />
