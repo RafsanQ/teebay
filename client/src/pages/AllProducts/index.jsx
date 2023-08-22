@@ -27,7 +27,7 @@ export function AllProductsPage(){
             <div className="rightSideButtons">
                 <LogOutButton />
                 <Link to="/userproducts">
-                    <Button className='rightSideButtons' color="red" uppercase>
+                    <Button className='rightSideButtons' color="violet" uppercase>
                         My Products
                     </Button>
                 </Link>

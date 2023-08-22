@@ -1,4 +1,4 @@
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { Button } from '@mantine/core';
 import { Link } from "react-router-dom";
 import { ProductCard } from "../../components/ProductCard";
@@ -31,7 +31,7 @@ export function UserProductsPage(){
                 <LogOutButton />
                 
                 <Link to="/products">
-                    <Button className='rightSideButtons' color="red" uppercase>
+                    <Button className='rightSideButtons' color="violet" uppercase>
                         All Products
                     </Button>
                 </Link>
