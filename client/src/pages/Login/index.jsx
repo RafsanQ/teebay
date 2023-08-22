@@ -5,7 +5,7 @@ import { SignUpForm } from './SignUpForm'
 
 export function LoginPage(){
 
-    const [isLogginPage, setIsLogginPage] = useState(false);
+    const [isLogginPage, setIsLogginPage] = useState(true);
     
     const handleScreenChange = () => {
         setIsLogginPage(!isLogginPage);
