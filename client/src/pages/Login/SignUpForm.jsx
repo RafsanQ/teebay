@@ -1,8 +1,82 @@
 import { TextInput, Button, PasswordInput, Grid  } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import toast, { Toaster } from 'react-hot-toast';
+import { useMutation } from "@apollo/client";
+import { useNavigate } from 'react-router-dom';
+import { CREATE_NEW_USER } from '../../graphql/Auth.js';
 ;
 
 export function SignUpForm(props){
+    const navigate = useNavigate();
+
+    const [registerUser, { error, data, loading }] = useMutation(CREATE_NEW_USER, {
+        onCompleted(data, error){
+            if(error){
+                console.log("Registration failed. ");
+                toast("Registration failed. ", {
+                    style: {
+                        backgroundColro: 'red',
+                        color: 'white'
+                    }
+                });
+                return;
+            }
+            if(data){
+                toast('Registration successful', {
+                    style: {
+                        backgroundColor: 'green',
+                        color: 'white'
+                    }
+                });
+                props.handleScreenChange()
+            }
+        }
+    });
+
+
+    async function handleRegistration(values){
+        values.name = values.firstName + ' ' + values.lastName;
+        delete values.firstName;
+        delete values.lastName;
+        console.log( {values} );
+        await registerUser({
+            variables: {
+                name: values.name,
+                address: values.address,
+                email: values.email,
+                phoneNumber: values.phoneNumber,
+                password: values.password,
+            }
+        })
+        
+        if(error){
+            console.log("Sign up failed.");
+            toast("Sign up failed.", {
+                style: {
+                    backgroundColor: 'red',
+                    color: 'white'
+                }
+            });
+        }
+
+        if(data){
+            toast('Sign up successful', {
+                style: {
+                    backgroundColor: 'green',
+                    color: 'white'
+                }
+            });
+        }
+
+    }
+
+
+    // // Need notification here
+    // // if(loading){
+    // //      <h2>Signing In</h2>
+    // // }
+
+
     const form = useForm({
         initialValues: {
             firstName: '',
@@ -28,7 +102,7 @@ export function SignUpForm(props){
         <div>
             <h1 className='pageTitle'>Sign Up</h1>
             <div className='card-form'>
-                <form form onSubmit={form.onSubmit((values) => console.log(values))}>
+                <form form onSubmit={form.onSubmit((values) => handleRegistration(values))}>
                     <Grid gutter={20}>
                         <Grid.Col span={6}>
                             <TextInput variant="unstyled" className='inputText'
@@ -74,6 +148,7 @@ export function SignUpForm(props){
                 </form>
                 <p>Already have an account? <span onClick={props.handleScreenChange} className='changerButton'> Sign in </span></p>
             </div>
+            <Toaster/>
         </div>   
     )
 }

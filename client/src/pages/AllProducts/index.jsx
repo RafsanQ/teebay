@@ -1,6 +1,7 @@
 import { useQuery, gql } from "@apollo/client";
 
 import { ProductCard } from "../../components/ProductCard";
+import { LogOutButton } from "../../components/LogOutButton";
 
 const GET_PRODUCTS = gql`
 query{
@@ -24,6 +25,9 @@ query{
 }
 `
 
+
+
+
 export function AllProductsPage(){
 
     const { error, data, loading } = useQuery(GET_PRODUCTS);
@@ -39,10 +43,11 @@ export function AllProductsPage(){
 
     return (
         <div>
+            <LogOutButton />
             <h2 className="pageTitle">All Products</h2>
 
             {products.map(product => (
-                <ProductCard product={product}/>
+                <ProductCard key={product.id} product={product}/>
             ))}
             
         </div>

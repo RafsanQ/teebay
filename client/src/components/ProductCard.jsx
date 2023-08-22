@@ -16,11 +16,11 @@ export function ProductCard({product}){
                 <div>
                     {categories.length > 0 &&
                         (
-                            <p className="categories">
+                            <h6 className="categories">
                                 Categories: {categories.map(category =>(
-                                    <p>{category.title}, </p>
+                                    <p key={category.id}>{category.title}, </p>
                                 ))}
-                            </p>
+                            </h6>
                         )
                     }
                 </div>
