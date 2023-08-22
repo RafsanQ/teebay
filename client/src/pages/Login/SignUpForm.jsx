@@ -19,6 +19,7 @@ export function SignUpForm(props){
                         color: 'white'
                     }
                 });
+                return;
             }
             if(data){
                 toast('Registration successful', {

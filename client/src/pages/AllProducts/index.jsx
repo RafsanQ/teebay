@@ -1,6 +1,7 @@
 import { useQuery, gql } from "@apollo/client";
 
 import { ProductCard } from "../../components/ProductCard";
+import { LogOutButton } from "../../components/LogOutButton";
 
 const GET_PRODUCTS = gql`
 query{
@@ -24,6 +25,20 @@ query{
 }
 `
 
+
+const IS_LOGGED_IN = gql`
+  query IsUserLoggedIn {
+    isLoggedIn @client
+  }
+`;
+
+function IsLoggedIn() {
+    console.log("Checking if logged in...");
+    const { data } = useQuery(IS_LOGGED_IN);
+    return data.isLoggedIn;
+}
+
+
 export function AllProductsPage(){
 
     const { error, data, loading } = useQuery(GET_PRODUCTS);
@@ -39,10 +54,12 @@ export function AllProductsPage(){
 
     return (
         <div>
+            <LogOutButton />
             <h2 className="pageTitle">All Products</h2>
 
+            <h4>User Logged In? {}</h4>
             {products.map(product => (
-                <ProductCard product={product}/>
+                <ProductCard key={product.id} product={product}/>
             ))}
             
         </div>

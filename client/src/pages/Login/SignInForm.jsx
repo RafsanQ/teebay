@@ -5,6 +5,8 @@ import { useLazyQuery } from "@apollo/client";
 import { useNavigate } from 'react-router-dom';
 import { GET_AUTH } from '../../graphql/Auth.js';
 
+import { isLoggedInVar } from '../../cache/index.js';
+
 
 export function SignInForm(props){
     const navigate = useNavigate();
@@ -14,7 +16,9 @@ export function SignInForm(props){
                 console.log("Sign in failed", error);
                 return;
             }
-            localStorage.setItem("token", data.token)
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("userId", data.userId);
+            isLoggedInVar(true);
             navigate('/products')
         }
     });
