@@ -21,6 +21,18 @@ app.get('/', async (req, res, next) => {
   res.send({ message: 'Awesome it works 🐻' });
 });
 
+// CORS Configuration Middleware
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST', 'GET', 'OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  if(req.method === 'OPTIONS'){
+    return res.sendStatus(200);
+  }
+  next();
+})
+
 // Middleware to check token
 app.use(isAuthorised)
 

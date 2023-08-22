@@ -2,12 +2,10 @@ import { useState } from 'react';
 import { SignInForm } from './SignInForm'
 import { SignUpForm } from './SignUpForm'
 
-import './login.css'
-
 
 export function LoginPage(){
 
-    const [isLogginPage, setIsLogginPage] = useState(false);
+    const [isLogginPage, setIsLogginPage] = useState(true);
     
     const handleScreenChange = () => {
         setIsLogginPage(!isLogginPage);

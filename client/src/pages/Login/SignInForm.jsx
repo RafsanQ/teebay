@@ -18,7 +18,7 @@ export function SignInForm(props){
     return (
         <div>
             <h1 className='pageTitle'>Sign In</h1>
-            <div className='card'>
+            <div className='card-form'>
                 <form onSubmit={form.onSubmit((values) => console.log(values))}>
                     <TextInput variant="unstyled" className='inputText'
                         withAsterisk

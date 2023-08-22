@@ -27,7 +27,7 @@ export function SignUpForm(props){
     return (
         <div>
             <h1 className='pageTitle'>Sign Up</h1>
-            <div className='card'>
+            <div className='card-form'>
                 <form form onSubmit={form.onSubmit((values) => console.log(values))}>
                     <Grid gutter={20}>
                         <Grid.Col span={6}>
