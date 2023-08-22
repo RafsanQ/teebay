@@ -26,17 +26,6 @@ query{
 `
 
 
-const IS_LOGGED_IN = gql`
-  query IsUserLoggedIn {
-    isLoggedIn @client
-  }
-`;
-
-function IsLoggedIn() {
-    console.log("Checking if logged in...");
-    const { data } = useQuery(IS_LOGGED_IN);
-    return data.isLoggedIn;
-}
 
 
 export function AllProductsPage(){
@@ -57,7 +46,6 @@ export function AllProductsPage(){
             <LogOutButton />
             <h2 className="pageTitle">All Products</h2>
 
-            <h4>User Logged In? {}</h4>
             {products.map(product => (
                 <ProductCard key={product.id} product={product}/>
             ))}

@@ -19,15 +19,20 @@ export function SignInForm(props){
             localStorage.setItem("token", data.token);
             localStorage.setItem("userId", data.userId);
             isLoggedInVar(true);
+            
             navigate('/products')
         }
-    });
+    }
+    );
 
     async function handleLogin(values){
         await signInUser({
             variables: {
                 email: values.email,
                 password: values.password
+            },
+            update: (cache, data) => {
+                console.log(data);
             }
         })
 

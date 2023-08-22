@@ -48,29 +48,28 @@ export function SignUpForm(props){
                 password: values.password,
             }
         })
+        
+        if(error){
+            console.log("Sign up failed.");
+            toast("Sign up failed.", {
+                style: {
+                    backgroundColor: 'red',
+                    color: 'white'
+                }
+            });
+        }
+
+        if(data){
+            toast('Sign up successful', {
+                style: {
+                    backgroundColor: 'green',
+                    color: 'white'
+                }
+            });
+        }
+
     }
 
-
-    if(error){
-        console.log("Sign up failed.");
-        toast("Sign up failed.", {
-            style: {
-                backgroundColor: 'red',
-                color: 'white'
-            }
-        });
-    }
-
-    if(data){
-        toast('Sign up successful', {
-            style: {
-                backgroundColor: 'green',
-                color: 'white'
-            }
-        });
-    }
-
-    
 
     // // Need notification here
     // // if(loading){
