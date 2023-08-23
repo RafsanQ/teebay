@@ -20,8 +20,6 @@ export function AllProductsPage(){
 
     const products = data.products || [];
 
-    console.log({products: products})
-
     return (
         <div>
             <div className="rightSideButtons">

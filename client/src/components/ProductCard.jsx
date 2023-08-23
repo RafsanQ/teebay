@@ -3,7 +3,7 @@ export function ProductCard({product}){
 
     const ownerId = product.owner.id;
     const productTitle = product.title;
-    const categories = product.categories || [];
+    let categories = product.categories || [];
     const description = product.description;
     const price = product.price;
     const rentPrice = product.rentPrice;
@@ -12,10 +12,18 @@ export function ProductCard({product}){
 
     let trashCanButton = null;
     if(ownerId === localStorage.getItem('userId')) {
-        console.log('same owner', ownerId);
         trashCanButton = (
             <img src="/trash-bin.png" className="trashcan" alt="Logo" />
         );
+    }
+
+    if(categories.length > 0){
+        let tempCategories = [];
+
+        categories.forEach(category => {
+            tempCategories.push(category.title);
+        });
+        categories = tempCategories.join(', ');
     }
 
     return (
@@ -25,7 +33,7 @@ export function ProductCard({product}){
             </div>
             <div className="leftSide">
                 <h2>{productTitle}</h2>
-                <div>
+                {/* <div>
                     {categories.length > 0 &&
                         (
                             <h5 className="categories">
@@ -35,7 +43,16 @@ export function ProductCard({product}){
                             </h5>
                         )
                     }
-                </div>
+                </div> */}
+
+                {categories.length > 0 &&
+                    (
+                        <div className="categories">
+                            <h5>Categories: {categories}</h5>
+                        </div>
+                    )
+                }
+                
                 
                 <p>Price: ${price} | Rent: ${rentPrice} per {rentDuration}</p>
                 <p className="description">{description}</p>

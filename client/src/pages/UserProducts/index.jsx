@@ -25,8 +25,6 @@ export function UserProductsPage(){
 
     const products = data.productsOwnedBy || [];
 
-    console.log({products})
-
     return (
         <div>
             <div className="rightSideButtons">

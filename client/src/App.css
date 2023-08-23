@@ -54,12 +54,9 @@
 .card h5{
   color: rgb(125, 125, 125);
   font-weight: bold;
-  
-}
-
-.card .categories{
   display: inline;
 }
+
 
 .card .description{
   color: black;
