@@ -125,6 +125,10 @@ export default {
             throw error;
         }
     },
+    getAllProductCategories: async () => {
+        const categories = await prisma.catagory.findMany();
+        return categories;
+    },
 
     addCategory: async (args) => {
         const { productId, categoryId } = args

@@ -4,11 +4,11 @@ import { TextInput, Button, Textarea, NumberInput, Grid, Select } from '@mantine
 import { useForm } from '@mantine/form';
 import { GET_SINGLE_PRODUCT } from "../../graphql/Products.js"
 import './index.css'
+import { CategoriesList } from "./CategoriesList.jsx";
 
 export function EditProductPage(){
 
     let { productid } = useParams();
-    
     const form = useForm({
         initialValues: {
             title: '',
@@ -18,7 +18,7 @@ export function EditProductPage(){
             rentDuration: '',
         }
     });
-    const { error: queryError, data: queryData, loading: queryLoading } = useQuery(GET_SINGLE_PRODUCT, {
+    const { error: queryError, loading: queryLoading } = useQuery(GET_SINGLE_PRODUCT, {
         variables: {
             productId: parseInt(productid)
         },
@@ -30,6 +30,7 @@ export function EditProductPage(){
                 rent: data?.getSingleProduct.rentPrice,
                 rentDuration: data?.getSingleProduct.rentDuration,
             })
+
         }
     })
     
@@ -50,14 +51,6 @@ export function EditProductPage(){
             </div>
         )
     }
-
-    // form.setValues({
-    //     title: queryData?.getSingleProduct.title | '',
-    //       description: queryData?.getSingleProduct.description | '',
-    //       price: queryData?.getSingleProduct.price | '',
-    //       rent: queryData?.getSingleProduct.rentPrice | '',
-    //       rentDuration: queryData?.getSingleProduct.rentDuration | '',
-    // })
 
 
     return (
@@ -102,12 +95,10 @@ export function EditProductPage(){
                     </Grid.Col>
                 </Grid>
                 <br />
-
-
-                <br />
-                <Button type="submit" color="violet">Submit</Button>
-
+                <div className="submitButton"><Button type="submit" color="violet" >Submit</Button></div>
             </form>
+
+            <CategoriesList />
         </div>
     )
 }

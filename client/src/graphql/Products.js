@@ -59,3 +59,12 @@ query getSingleProduct($productId: Int!){
   }
 }
 `
+
+export const GET_ALL_PRODUCT_CATEGORIES = gql`
+query{
+  getAllProductCategories{
+    id,
+    title
+  }
+}
+`

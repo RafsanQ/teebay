@@ -65,6 +65,7 @@ export default buildSchema(`
         products: [Product!]!
         getSingleProduct (productId: Int): Product!
         productsOwnedBy (ownerId: Int): [Product!]
+        getAllProductCategories: [Category!]!
         users: [User!]!
         loginUser (email: String, password: String): AuthData! 
     }

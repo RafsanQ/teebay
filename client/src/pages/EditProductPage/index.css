@@ -5,3 +5,12 @@
     align-items: center;
     justify-content: center;
   }
+
+  .card-noborder .submitButton{
+    text-align: center;
+    padding: 5%;
+  }
+
+  .card-noborder .categories{
+    margin: 10% 5%;
+  }
