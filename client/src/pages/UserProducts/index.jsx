@@ -1,14 +1,16 @@
 import { useQuery } from "@apollo/client";
 import { Button } from '@mantine/core';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ProductCard } from "../../components/ProductCard";
 import { LogOutButton } from "../../components/LogOutButton";
 import { GET_PRODUCTS_BY_USER } from "../../graphql/Products";
 
-
-
 export function UserProductsPage(){
-
+    const navigate = useNavigate();
+    function navigateToEditPage(productId){
+        
+        navigate("editproduct/" + productId);
+    }
     
     let { error, loading, data } = useQuery(GET_PRODUCTS_BY_USER, {
         variables: {
@@ -39,7 +41,9 @@ export function UserProductsPage(){
             <h2 className="pageTitle">My Products</h2>
 
             {products.map(product => (
-                <ProductCard key={product.id} product={product}/>
+                <div onClick={()=>navigateToEditPage(product.id)} key={product.id}>
+                    <ProductCard product={product}/>
+                </div>
             ))}
 
             <div className="bottomSection">

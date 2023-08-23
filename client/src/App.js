@@ -6,6 +6,7 @@ import { AllProductsPage } from "./pages/AllProducts"
 import { UserProductsPage } from "./pages/UserProducts"
 
 import './App.css';
+import { EditProductPage } from "./pages/EditProductPage";
 
 
 
@@ -39,6 +40,7 @@ function App() {
             <Route path="/" element={!isLoggedIn ? <LoginPage /> : <Navigate to='/products' /> } />
             <Route path="/products" element={isLoggedIn ? <AllProductsPage /> : <Navigate to='/' />} />
             <Route path="/userproducts" element={isLoggedIn ? <UserProductsPage /> : <Navigate to='/' />} />
+            <Route path="/userproducts/editproduct/:productid" element={isLoggedIn ? <EditProductPage /> : <Navigate to='/' />} />
           </Routes>
         </BrowserRouter>
     </div>
