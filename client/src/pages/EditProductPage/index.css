@@ -6,11 +6,17 @@
     justify-content: center;
   }
 
-  .card-noborder .submitButton{
-    text-align: center;
+.card-noborder .submitButton{
+    text-align: right;
     padding: 5%;
-  }
+}
 
-  .card-noborder .categories{
-    margin: 10% 5%;
-  }
+
+.card-noborder .categories{
+    margin: 2% 0%;
+}
+
+.card-noborder .categories h4{
+    margin: 2% 2% 1% 0%;
+    font-weight: lighter;
+}

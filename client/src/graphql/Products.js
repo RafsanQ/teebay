@@ -59,6 +59,16 @@ query getSingleProduct($productId: Int!){
   }
 }
 `
+export const GET_THIS_PRODUCTS_CATEGORIES = gql`
+query getThisProductsCategories($productId: Int!){
+  getSingleProduct(productId: $productId){
+		categories {
+		  id,
+      title
+		}
+  }
+}
+`
 
 export const GET_ALL_PRODUCT_CATEGORIES = gql`
 query{

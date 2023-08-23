@@ -30,7 +30,6 @@ export function EditProductPage(){
                 rent: data?.getSingleProduct.rentPrice,
                 rentDuration: data?.getSingleProduct.rentDuration,
             })
-
         }
     })
     
@@ -52,6 +51,13 @@ export function EditProductPage(){
         )
     }
 
+    let catagories = [];
+    function updateCategories(values){
+        catagories = values;
+        console.log({catagories});
+    }
+
+    
 
     return (
         <div className="card-noborder">
@@ -60,7 +66,7 @@ export function EditProductPage(){
                 label="Title"
                 {...form.getInputProps('title')}
                 />
-                <br />
+                <CategoriesList productId={productid} updateCategories={updateCategories} />
                 <Textarea
                 label="Description"
                 {...form.getInputProps('description')}
@@ -95,10 +101,10 @@ export function EditProductPage(){
                     </Grid.Col>
                 </Grid>
                 <br />
-                <div className="submitButton"><Button type="submit" color="violet" >Submit</Button></div>
+                <div className="submitButton"><Button type="submit" color="violet" >Save</Button></div>
             </form>
 
-            <CategoriesList />
+            
         </div>
     )
 }

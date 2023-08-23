@@ -69,6 +69,7 @@ export default {
 
     getSingleProduct: async (args) => {
         try{
+            console.log(args.productId);
             let product = await prisma.product.findUnique({
                 where: {
                     id: args.productId
@@ -82,9 +83,10 @@ export default {
                     }
                 }
             })
-
+            
             // Because the required category information is nested, we flatten it and remove the redundant junction table values.
             product = flatenProductCategories(product);
+            console.log({product});
             return product;
         }catch(error){
             console.error(error);
