@@ -110,3 +110,11 @@ mutation addCategory($productId: Int!){
   }
 }
 `
+
+export const DELETE_PRODUCT = gql`
+mutation deleteProduct($productId: Int!){
+  deleteProduct(productId: $productId){
+    id,
+  }
+}
+`

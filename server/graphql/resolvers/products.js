@@ -113,7 +113,7 @@ export default {
                     rentDuration: args.productInput.rentDuration,
                     created_at: new Date().toISOString(),
                     // ownerId: args.productInput.ownerId
-                    ownerId: 2,
+                    ownerId: args.productInput.userId
                 },
                 include: {
                     owner: true

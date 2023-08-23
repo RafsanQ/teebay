@@ -1,9 +1,38 @@
+import { useMutation } from '@apollo/client';
+import { Button, Text } from '@mantine/core';
+import { modals } from '@mantine/modals';
+import { DELETE_PRODUCT } from '../graphql/Products';
 
 export function ProductCard({product}){
+
+    const openModal = () => modals.openConfirmModal({
+        title: 'Are you sure you want to delete this product?',
+        centered: true,
+        children: (
+          <Text size="sm">
+            Deleting this would mean that the product will be permanently removed from out system. All records including those who are currently renting it will be lost.
+          </Text>
+        ),
+        labels: { confirm: 'Yes', cancel: 'No' },
+        confirmProps: { color: 'red' },
+        onCancel: () => console.log('Cancel'),
+        onConfirm: () => handleDelete(),
+      });
 
     function parseISOString(s) {
         var b = s.split(/\D+/);
         return new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
+    }
+
+    const [deleteProduct, {error, loading}] = useMutation(DELETE_PRODUCT);
+
+    async function handleDelete(){
+        await deleteProduct({
+            variables: {
+                productId: parseInt(product.id)
+            }
+        });
+        
     }
 
     const ownerId = product.owner.id;
@@ -18,7 +47,7 @@ export function ProductCard({product}){
     let trashCanButton = null;
     if(ownerId === localStorage.getItem('userId')) {
         trashCanButton = (
-            <img src="/trash-bin.png" className="trashcan" alt="Logo" />
+            <img src="/trash-bin.png" onClick={openModal} className="trashcan" alt="Logo" />
         );
     }
 
@@ -33,7 +62,7 @@ export function ProductCard({product}){
 
     return (
         <div className="card">
-            <div className="rightSide">
+            <div className="rightSide" >
                 {trashCanButton}
             </div>
             <div className="leftSide">
