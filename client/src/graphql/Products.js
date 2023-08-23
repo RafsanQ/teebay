@@ -78,3 +78,43 @@ query{
   }
 }
 `
+
+export const UPDATE_PRODUCT = gql`
+mutation updateProduct($productId: ID!, $title: String!, $description: String!, $price: Int!, $rentPrice: Int!, $rentDuration: String!){
+  updateProduct(productUpdateInput: {id: $productId, title: $title, description: $description, price: $price, rentPrice: $rentPrice, rentDuration: $rentDuration}){
+    id,
+    title,
+    price,
+    description,
+    rentPrice,
+    rentDuration,
+  }
+}
+`
+
+export const ADD_CATEGORY = gql`
+mutation addCategory($productId: Int!, $categoryId: Int!){
+  addCategory(productId: $productId, categoryId: $categoryId){
+    categories {
+      id,
+      title
+    }
+  }
+}
+`
+
+export const CLEAR_ALL_CATEGORIES = gql`
+mutation addCategory($productId: Int!){
+  clearAllCategories(productId: $productId){
+    id,
+  }
+}
+`
+
+export const DELETE_PRODUCT = gql`
+mutation deleteProduct($productId: Int!){
+  deleteProduct(productId: $productId){
+    id,
+  }
+}
+`

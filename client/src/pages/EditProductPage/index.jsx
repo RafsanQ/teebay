@@ -1,10 +1,14 @@
 import { useParams } from "react-router-dom"
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { TextInput, Button, Textarea, NumberInput, Grid, Select } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { GET_SINGLE_PRODUCT } from "../../graphql/Products.js"
-import './index.css'
+import toast, { Toaster } from 'react-hot-toast';
+
+import { GET_SINGLE_PRODUCT, UPDATE_PRODUCT, ADD_CATEGORY, CLEAR_ALL_CATEGORIES } from "../../graphql/Products.js"
+
 import { CategoriesList } from "./CategoriesList.jsx";
+import './index.css'
+import { GET_PRODUCTS } from './../../graphql/Products';
 
 export function EditProductPage(){
 
@@ -32,21 +36,35 @@ export function EditProductPage(){
             })
         }
     })
+
+    const [updateProduct, { error: updateError, loading: updateLoading }] = useMutation(UPDATE_PRODUCT);
+
+    const [addCategory, { error: addCategoryError, loading: addCategoryLoading }] = useMutation(ADD_CATEGORY);
+    const [clearAllCategories, { error: clearCategoryError, loading: clearCategoryLoading }] = useMutation(CLEAR_ALL_CATEGORIES);
     
     
 
-    if(queryLoading){
+    if(queryLoading || updateLoading || addCategoryLoading || clearCategoryLoading){
         return (
             <div className="card-noborder">
-                <h3>Getting Product</h3>
+                <h3>Loading...</h3>
             </div>
         )
     }
 
-    if(queryError){
+    if(queryError || updateError || addCategoryError || clearCategoryError){
+        console.log({queryError}, {updateError}, {addCategoryError}, {clearCategoryError});
+        toast("We ran into an error", {
+            style: {
+                backgroundColor: 'red',
+                color: 'white'
+            }
+        });
         return (
+            
             <div className="card-noborder">
                 <h3>Error Getting Product</h3>
+                <Toaster/>
             </div>
         )
     }
@@ -57,11 +75,49 @@ export function EditProductPage(){
         console.log({catagories});
     }
 
-    
+    async function handleSave(values){
+        console.log({values, productid});
+        await updateProduct({
+            variables: {
+                productId: parseInt(productid),
+                title: values.title,
+                description: values.description,
+                price: values.price,
+                rentPrice: values.rent,
+                rentDuration: values.rentDuration,
+            },
+            refetchQueries: {
+                GET_SINGLE_PRODUCT,
+                GET_PRODUCTS,
+            }
+        });
+
+        await clearAllCategories({
+            variables: {
+                productId: parseInt(productid)
+            }
+        })
+
+        if(catagories.length > 0){  
+            for(const category of catagories){
+                await addCategory({
+                    variables: {
+                        productId: parseInt(productid),
+                        categoryId: parseInt(category.value)
+                    }
+                })
+            }
+        }
+
+        window.location.reload(false);
+    }
+
 
     return (
+        
         <div className="card-noborder">
-            <form onSubmit={form.onSubmit((values) => console.log(values))}>
+            <Toaster/>
+            <form onSubmit={form.onSubmit((values) => handleSave(values))}>
                 <TextInput
                 label="Title"
                 {...form.getInputProps('title')}
