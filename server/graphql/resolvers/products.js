@@ -163,7 +163,35 @@ export default {
         }
     },
 
-    
+    removeCategory: async (args) => {
+        const { productId, categoryId } = args;
+        try{
+            await prisma.CatagoriesOnProduct.deleteMany({
+                where: {productId: productId, categoryId: categoryId}
+            })
+
+            let updatedProduct = await prisma.product.findUnique({
+                where: {
+                    id: productId
+                },
+                include: {
+                    owner: true,
+                    categories: {
+                        include: {
+                            category: true
+                        }
+                    }
+                }
+            })
+            // Because the required category information is nested, we flatten it and remove the redundant junction table values.
+            updatedProduct = flatenProductCategories(updatedProduct);
+            return updatedProduct;
+            
+        }catch(error){
+            console.error(error);
+            throw error;
+        }
+    },
 
     updateProduct: async (args) => {
         try{
