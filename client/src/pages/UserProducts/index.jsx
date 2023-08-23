@@ -41,6 +41,10 @@ export function UserProductsPage(){
             {products.map(product => (
                 <ProductCard key={product.id} product={product}/>
             ))}
+
+            <div className="bottomSection">
+                <Button color="violet">Add Product</Button>
+            </div>
             
         </div>
     );

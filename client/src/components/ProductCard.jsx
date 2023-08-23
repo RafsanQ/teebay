@@ -14,7 +14,7 @@ export function ProductCard({product}){
     if(ownerId === localStorage.getItem('userId')) {
         console.log('same owner', ownerId);
         trashCanButton = (
-            <img src="/trash-bin.png" width={20} height={25} alt="Logo" />
+            <img src="/trash-bin.png" className="trashcan" alt="Logo" />
         );
     }
 
@@ -28,11 +28,11 @@ export function ProductCard({product}){
                 <div>
                     {categories.length > 0 &&
                         (
-                            <h6 className="categories">
+                            <h5 className="categories">
                                 Categories: {categories.map(category =>(
                                     <p key={category.id}>{category.title}, </p>
                                 ))}
-                            </h6>
+                            </h5>
                         )
                     }
                 </div>
