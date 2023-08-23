@@ -72,7 +72,7 @@ export default buildSchema(`
 
     type RootMutation {
         createProduct(productInput: ProductInput): Product
-        addCategory(productId: Int, categoryId: Int): Product
+        addCategory(productId: Int, categoryId: Int): Product!
         removeCategory(productId: Int, categoryId: Int): Product
         clearAllCategories(productId: Int): Product
         updateProduct(productUpdateInput: ProductUpdateInput): Product

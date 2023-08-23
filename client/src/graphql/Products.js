@@ -92,3 +92,43 @@ mutation updateProduct($productId: ID!, $title: String!, $description: String!, 
   }
 }
 `
+
+export const ADD_CATEGORY = gql`
+mutation addCategory($productId: Int!, $categoryId: Int!){
+  addCategory(productId: $productId, categoryId: $categoryId){
+    id,
+    title,
+    price,
+    rentPrice,
+    owner {
+      id,
+      name,
+      email
+    },
+    categories {
+      id,
+      title
+    }
+  }
+}
+`
+
+export const CLEAR_ALL_CATEGORIES = gql`
+mutation addCategory($productId: Int!){
+  clearAllCategories(productId: $productId){
+    id,
+    title,
+    price,
+    rentPrice,
+    owner {
+      id,
+      name,
+      email
+    },
+    categories {
+      id,
+      title
+    }
+  }
+}
+`
