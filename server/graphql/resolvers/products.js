@@ -1,6 +1,17 @@
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
+function flatenProductCategories(product){
+    product.categories.forEach(thisElement => {
+        thisElement.id = thisElement.category.id;
+        thisElement.title = thisElement.category.title;
+        delete thisElement.category;
+        delete thisElement.productId;
+        delete thisElement.categoryId;
+    });
+    return product;
+}
+
 export default {
     products: async () => {
         try{
@@ -11,20 +22,13 @@ export default {
                         include: {
                             category: true
                         }
-                    }
-                    
+                    }     
                 }
             });
 
             // Because the required category information is nested, we flatten it and remove the redundant junction table values.
             products.forEach(product => {
-                product.categories.forEach(thisElement => {
-                    thisElement.id = thisElement.category.id;
-                    thisElement.title = thisElement.category.title;
-                    delete thisElement.category;
-                    delete thisElement.productId;
-                    delete thisElement.categoryId;
-                })
+                product = flatenProductCategories(product);
             });
 
             return products;
@@ -35,10 +39,37 @@ export default {
         
     },
 
+    productsOwnedBy : async (args) => {
+        try{
+            const products = await prisma.product.findMany({
+                where: {
+                    ownerId: args.ownerId
+                },
+                include: {
+                    owner: true,
+                    categories: {
+                        include: {
+                            category: true
+                        }
+                    } 
+                }
+            })
+
+            // Because the required category information is nested, we flatten it and remove the redundant junction table values.
+            products.forEach(product => {
+                product = flatenProductCategories(product);
+            });
+
+            return products;
+        }catch(error){
+            console.error(error);
+            throw error;
+        }
+    },
+
     getSingleProduct: async (args) => {
         try{
-            console.log(args.productId);
-            const product = await prisma.product.findUnique({
+            let product = await prisma.product.findUnique({
                 where: {
                     id: args.productId
                 },
@@ -52,15 +83,8 @@ export default {
                 }
             })
 
-             // Because the required category information is nested, we flatten it and remove the redundant junction table values.
-            product.categories.forEach(thisElement => {
-                thisElement.id = thisElement.category.id;
-                thisElement.title = thisElement.category.title;
-                delete thisElement.category;
-                delete thisElement.productId;
-                delete thisElement.categoryId;
-            })
-
+            // Because the required category information is nested, we flatten it and remove the redundant junction table values.
+            product = flatenProductCategories(product);
             return product;
         }catch(error){
             console.error(error);
@@ -79,9 +103,6 @@ export default {
     },
 
     createProduct: async (args, req) => {
-        if(!req.isAuth){
-            throw new Error("Unauthenticated");
-        }
         try{
             const product = await prisma.product.create({
                 data: {
@@ -93,13 +114,11 @@ export default {
                     created_at: new Date().toISOString(),
                     // ownerId: args.productInput.ownerId
                     ownerId: 2,
-
                 },
                 include: {
                     owner: true
                 }
               })
-              console.log("Product created", product);
               return product;
         }catch(error){
             console.error(error);
@@ -110,7 +129,7 @@ export default {
     addCategory: async (args) => {
         const { productId, categoryId } = args
         try{
-            const updatedProduct = await prisma.product.update({
+            let updatedProduct = await prisma.product.update({
                 where: {
                     id: productId
                 },
@@ -136,16 +155,38 @@ export default {
             });
 
             // Because the required category information is nested, we flatten it and remove the redundant junction table values.
-            updatedProduct.categories.forEach(thisElement => {
-                thisElement.id = thisElement.category.id;
-                thisElement.title = thisElement.category.title;
-                delete thisElement.category;
-                delete thisElement.productId;
-                delete thisElement.categoryId;
+            updatedProduct = flatenProductCategories(updatedProduct);
+            return updatedProduct;
+        }catch(error){
+            console.error(error);
+            throw error;
+        }
+    },
+
+    removeCategory: async (args) => {
+        const { productId, categoryId } = args;
+        try{
+            await prisma.CatagoriesOnProduct.deleteMany({
+                where: {productId: productId, categoryId: categoryId}
             })
 
-            // console.log(JSON.stringify(updatedProduct, null, 4));
+            let updatedProduct = await prisma.product.findUnique({
+                where: {
+                    id: productId
+                },
+                include: {
+                    owner: true,
+                    categories: {
+                        include: {
+                            category: true
+                        }
+                    }
+                }
+            })
+            // Because the required category information is nested, we flatten it and remove the redundant junction table values.
+            updatedProduct = flatenProductCategories(updatedProduct);
             return updatedProduct;
+            
         }catch(error){
             console.error(error);
             throw error;
@@ -167,10 +208,21 @@ export default {
                     created_at: new Date().toISOString(),
                     // ownerId: args.productInput.ownerId
                     ownerId: 2,
+                },
+                include: {
+                    owner: true,
+                    categories: {
+                        include: {
+                            category: true
+                        }
+                    }
                 }
-              })
-              console.log("Product updated", product);
-              return product;
+            })
+
+            // Because the required category information is nested, we flatten it and remove the redundant junction table values.
+            updatedProduct = flatenProductCategories(updatedProduct);
+
+            return product;
         }catch(error){
             console.error(error);
             throw error;

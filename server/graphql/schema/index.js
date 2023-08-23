@@ -55,6 +55,7 @@ export default buildSchema(`
     type RootQuery {
         products: [Product!]!
         getSingleProduct (productId: Int): Product!
+        productsOwnedBy (ownerId: Int): [Product!]
         users: [User!]!
         loginUser (email: String, password: String): AuthData! 
     }
@@ -62,6 +63,7 @@ export default buildSchema(`
     type RootMutation {
         createProduct(productInput: ProductInput): Product
         addCategory(productId: Int, categoryId: Int): Product
+        removeCategory(productId: Int, categoryId: Int): Product
         updateProduct(productId: Int, productInput: ProductInput): Product
         deleteProduct(productId: Int): Product
         createUser(userInput: UserInput): User

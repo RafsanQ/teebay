@@ -10,7 +10,7 @@ export function LogOutButton(){
         toast("Signed Out");
         localStorage.setItem("token", '');
         localStorage.setItem("userId", '');
-        isLoggedInVar(true);
+        isLoggedInVar(false);
         navigate('/');
     }
 

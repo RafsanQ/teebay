@@ -16,9 +16,10 @@ export function SignInForm(props){
                 console.log("Sign in failed", error);
                 return;
             }
-            localStorage.setItem("token", data.token);
-            localStorage.setItem("userId", data.userId);
+            localStorage.setItem("token", data.loginUser.token);
+            localStorage.setItem("userId", data.loginUser.userId);
             isLoggedInVar(true);
+            console.log(data.loginUser.userId);
             
             navigate('/products')
         }

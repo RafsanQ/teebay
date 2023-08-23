@@ -1,34 +1,15 @@
-import { useQuery, gql } from "@apollo/client";
-
+import { useQuery } from "@apollo/client";
+import { Button } from '@mantine/core';
+import { Link } from "react-router-dom";
 import { ProductCard } from "../../components/ProductCard";
 import { LogOutButton } from "../../components/LogOutButton";
-
-const GET_PRODUCTS = gql`
-query{
-    products{
-        id,
-        title,
-        description,
-        price,
-      	rentPrice,
-      	rentDuration,
-        created_at,
-        owner{
-            email
-        },
-        categories {
-            id,
-            title,
-            created_at
-        }
-    }
-}
-`
-
-
-
+import { GET_PRODUCTS } from "../../graphql/Products.js"
 
 export function AllProductsPage(){
+
+
+
+
 
     const { error, data, loading } = useQuery(GET_PRODUCTS);
     
@@ -39,11 +20,17 @@ export function AllProductsPage(){
 
     const products = data.products || [];
 
-    console.log({products: products})
-
     return (
         <div>
-            <LogOutButton />
+            <div className="rightSideButtons">
+                <LogOutButton />
+                <Link to="/userproducts">
+                    <Button className='rightSideButtons' color="violet" uppercase>
+                        My Products
+                    </Button>
+                </Link>
+            </div>
+            
             <h2 className="pageTitle">All Products</h2>
 
             {products.map(product => (
