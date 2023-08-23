@@ -40,6 +40,41 @@ query getProductsByUser($userId: Int!){
         title
     }
   }
-  
+}
+`
+
+export const GET_SINGLE_PRODUCT = gql`
+query getSingleProduct($productId: Int!){
+  getSingleProduct(productId: $productId) {
+    id,
+    title,
+    price,
+    rentPrice
+    rentDuration,
+    description,
+		categories {
+		  id,
+      title
+		}
+  }
+}
+`
+export const GET_THIS_PRODUCTS_CATEGORIES = gql`
+query getThisProductsCategories($productId: Int!){
+  getSingleProduct(productId: $productId){
+		categories {
+		  id,
+      title
+		}
+  }
+}
+`
+
+export const GET_ALL_PRODUCT_CATEGORIES = gql`
+query{
+  getAllProductCategories{
+    id,
+    title
+  }
 }
 `

@@ -34,6 +34,15 @@ export default buildSchema(`
         userId: Int
     }
 
+    input ProductUpdateInput {
+        id: ID!
+        title: String!
+        description: String
+        price: Int
+        rentPrice: Int
+        rentDuration: String
+    }
+
     type Product {
         id: ID!
         title: String!
@@ -56,6 +65,7 @@ export default buildSchema(`
         products: [Product!]!
         getSingleProduct (productId: Int): Product!
         productsOwnedBy (ownerId: Int): [Product!]
+        getAllProductCategories: [Category!]!
         users: [User!]!
         loginUser (email: String, password: String): AuthData! 
     }
@@ -64,7 +74,7 @@ export default buildSchema(`
         createProduct(productInput: ProductInput): Product
         addCategory(productId: Int, categoryId: Int): Product
         removeCategory(productId: Int, categoryId: Int): Product
-        updateProduct(productId: Int, productInput: ProductInput): Product
+        updateProduct(productUpdateInput: ProductUpdateInput): Product
         deleteProduct(productId: Int): Product
         createUser(userInput: UserInput): User
     }

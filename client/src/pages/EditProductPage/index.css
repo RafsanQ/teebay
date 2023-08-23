@@ -1,0 +1,22 @@
+.card-noborder{
+    width: clamp(40%, 40%, 20%);
+    padding: 1% 3%;
+    margin: 10% auto 2% auto;
+    align-items: center;
+    justify-content: center;
+  }
+
+.card-noborder .submitButton{
+    text-align: right;
+    padding: 5%;
+}
+
+
+.card-noborder .categories{
+    margin: 2% 0%;
+}
+
+.card-noborder .categories h4{
+    margin: 2% 2% 1% 0%;
+    font-weight: lighter;
+}
