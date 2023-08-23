@@ -1,6 +1,8 @@
 import { buildSchema } from 'graphql'
 
 export default buildSchema(`
+    scalar ISODate
+
     type AuthData {
         userId: ID!
         token: String!
@@ -50,15 +52,15 @@ export default buildSchema(`
         price: Int
         rentPrice: Int
         rentDuration: String
-        created_at: String!
-        owner: User!
+        created_at: ISODate!
+        owner: User
         categories: [Category] 
     }
 
     type Category {
         id: ID!
         title: String
-        created_at: String!
+        created_at: ISODate
     }
 
     type RootQuery {

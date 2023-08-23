@@ -1,6 +1,11 @@
 
 export function ProductCard({product}){
 
+    function parseISOString(s) {
+        var b = s.split(/\D+/);
+        return new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
+    }
+
     const ownerId = product.owner.id;
     const productTitle = product.title;
     let categories = product.categories || [];
@@ -8,7 +13,7 @@ export function ProductCard({product}){
     const price = product.price;
     const rentPrice = product.rentPrice;
     const rentDuration = product.rentDuration;
-    const datePosted = product.created_at;
+    const datePosted = parseISOString(product.created_at).toString().substring(0,15);
 
     let trashCanButton = null;
     if(ownerId === localStorage.getItem('userId')) {
@@ -33,17 +38,6 @@ export function ProductCard({product}){
             </div>
             <div className="leftSide">
                 <h2>{productTitle}</h2>
-                {/* <div>
-                    {categories.length > 0 &&
-                        (
-                            <h5 className="categories">
-                                Categories: {categories.map(category =>(
-                                    <p key={category.id}>{category.title}, </p>
-                                ))}
-                            </h5>
-                        )
-                    }
-                </div> */}
 
                 {categories.length > 0 &&
                     (

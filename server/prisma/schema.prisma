@@ -28,7 +28,7 @@ model Product {
   price        Int                   @default(99)
   rentPrice    Int                   @default(19)
   rentDuration String
-  created_at   DateTime              @default(now())
+  created_at   DateTime              @default(now()) @db.Date
   owner        User                  @relation(fields: [ownerId], references: [id])
   ownerId      Int
   categories   CatagoriesOnProduct[]
@@ -37,7 +37,7 @@ model Product {
 model Catagory {
   id         Int      @id @default(autoincrement())
   title      String   @unique
-  created_at DateTime @default(now())
+  created_at DateTime @default(now()) @db.Date
 
   products CatagoriesOnProduct[]
 }
@@ -48,7 +48,7 @@ model CatagoriesOnProduct {
   category   Catagory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId Int
 
-  created_at DateTime @default(now())
+  created_at DateTime @default(now()) @db.Date
 
   @@id([productId, categoryId])
 }
