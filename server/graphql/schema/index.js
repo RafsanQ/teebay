@@ -74,6 +74,7 @@ export default buildSchema(`
         createProduct(productInput: ProductInput): Product
         addCategory(productId: Int, categoryId: Int): Product
         removeCategory(productId: Int, categoryId: Int): Product
+        clearAllCategories(productId: Int): Product
         updateProduct(productUpdateInput: ProductUpdateInput): Product
         deleteProduct(productId: Int): Product
         createUser(userInput: UserInput): User

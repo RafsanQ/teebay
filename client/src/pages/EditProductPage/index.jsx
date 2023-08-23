@@ -1,10 +1,13 @@
 import { useParams } from "react-router-dom"
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { TextInput, Button, Textarea, NumberInput, Grid, Select } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { GET_SINGLE_PRODUCT } from "../../graphql/Products.js"
-import './index.css'
+import { UPDATE_PRODUCT } from "../../graphql/Products.js";
+
 import { CategoriesList } from "./CategoriesList.jsx";
+import './index.css'
+import { GET_PRODUCTS } from './../../graphql/Products';
 
 export function EditProductPage(){
 
@@ -32,10 +35,12 @@ export function EditProductPage(){
             })
         }
     })
+
+    const [updateProduct, { error: updateError, loading: updateLoading }] = useMutation(UPDATE_PRODUCT);
     
     
 
-    if(queryLoading){
+    if(queryLoading || updateLoading){
         return (
             <div className="card-noborder">
                 <h3>Getting Product</h3>
@@ -43,7 +48,8 @@ export function EditProductPage(){
         )
     }
 
-    if(queryError){
+    if(queryError || updateError){
+        console.log({updateError});
         return (
             <div className="card-noborder">
                 <h3>Error Getting Product</h3>
@@ -57,11 +63,32 @@ export function EditProductPage(){
         console.log({catagories});
     }
 
-    
+    async function handleSave(values){
+        console.log({values, productid});
+        await updateProduct({
+            variables: {
+                productId: parseInt(productid),
+                title: values.title,
+                description: values.description,
+                price: values.price,
+                rentPrice: values.rent,
+                rentDuration: values.rentDuration,
+            },
+            refetchQueries: {
+                GET_SINGLE_PRODUCT,
+                GET_PRODUCTS,
+            }
+        });
+
+        
+
+        window.location.reload(false);
+    }
+
 
     return (
         <div className="card-noborder">
-            <form onSubmit={form.onSubmit((values) => console.log(values))}>
+            <form onSubmit={form.onSubmit((values) => handleSave(values))}>
                 <TextInput
                 label="Title"
                 {...form.getInputProps('title')}

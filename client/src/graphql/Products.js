@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import { typeDefs } from './client';
 
 
 export const GET_PRODUCTS = gql`
@@ -75,6 +76,19 @@ query{
   getAllProductCategories{
     id,
     title
+  }
+}
+`
+
+export const UPDATE_PRODUCT = gql`
+mutation updateProduct($productId: ID!, $title: String!, $description: String!, $price: Int!, $rentPrice: Int!, $rentDuration: String!){
+  updateProduct(productUpdateInput: {id: $productId, title: $title, description: $description, price: $price, rentPrice: $rentPrice, rentDuration: $rentDuration}){
+    id,
+    title,
+    price,
+    description,
+    rentPrice,
+    rentDuration,
   }
 }
 `

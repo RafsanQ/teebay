@@ -69,7 +69,6 @@ export default {
 
     getSingleProduct: async (args) => {
         try{
-            console.log(args.productId);
             let product = await prisma.product.findUnique({
                 where: {
                     id: args.productId
@@ -86,7 +85,6 @@ export default {
             
             // Because the required category information is nested, we flatten it and remove the redundant junction table values.
             product = flatenProductCategories(product);
-            console.log({product});
             return product;
         }catch(error){
             console.error(error);
@@ -199,8 +197,39 @@ export default {
         }
     },
 
+    clearAllCategories: async (args) => {
+        const productId = args.productId;
+        try{
+            await prisma.CatagoriesOnProduct.deleteMany({
+                where: {productId: productId}
+            });
+
+            let updatedProduct = await prisma.product.findUnique({
+                where: {
+                    id: productId
+                },
+                include: {
+                    owner: true,
+                    categories: {
+                        include: {
+                            category: true
+                        }
+                    }
+                }
+            })
+
+            // Because the required category information is nested, we flatten it and remove the redundant junction table values.
+            updatedProduct = flatenProductCategories(updatedProduct);
+            return updatedProduct;
+        }catch(error){
+            console.error(error);
+            throw error;
+        }
+    },
+
     updateProduct: async (args) => {
         try{
+            console.log({args});
             let updatedProduct = await prisma.product.update({
                 where: {
                     id: parseInt(args.productUpdateInput.id)
@@ -222,6 +251,8 @@ export default {
                     }
                 }
             })
+
+            console.log(updatedProduct);
 
             // Because the required category information is nested, we flatten it and remove the redundant junction table values.
             updatedProduct = flatenProductCategories(updatedProduct);
