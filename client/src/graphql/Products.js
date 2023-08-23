@@ -40,6 +40,21 @@ query getProductsByUser($userId: Int!){
         title
     }
   }
-  
+}
+`
+
+export const GET_SINGLE_PRODUCT = gql`
+query getSingleProduct($productId: Int!){
+  getSingleProduct(productId: $productId) {
+    id,
+    title,
+    price,
+    rentPrice
+    rentDuration,
+		categories {
+		  id,
+      title
+		}
+  }
 }
 `

@@ -195,19 +195,17 @@ export default {
 
     updateProduct: async (args) => {
         try{
-            const product = await prisma.product.update({
+            let updatedProduct = await prisma.product.update({
                 where: {
-                    id: args.productId
+                    id: parseInt(args.productUpdateInput.id)
                 },
                 data: {
-                    title: args.productInput.title,
-                    description: args.productInput.description,
-                    price: args.productInput.price,
-                    rentPrice: args.productInput.rentPrice,
-                    rentDuration: args.productInput.rentDuration,
+                    title: args.productUpdateInput.title,
+                    description: args.productUpdateInput.description,
+                    price: args.productUpdateInput.price,
+                    rentPrice: args.productUpdateInput.rentPrice,
+                    rentDuration: args.productUpdateInput.rentDuration,
                     created_at: new Date().toISOString(),
-                    // ownerId: args.productInput.ownerId
-                    ownerId: 2,
                 },
                 include: {
                     owner: true,
@@ -222,7 +220,7 @@ export default {
             // Because the required category information is nested, we flatten it and remove the redundant junction table values.
             updatedProduct = flatenProductCategories(updatedProduct);
 
-            return product;
+            return updatedProduct;
         }catch(error){
             console.error(error);
             throw error;

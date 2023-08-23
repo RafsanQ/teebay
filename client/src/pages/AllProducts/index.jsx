@@ -6,11 +6,7 @@ import { LogOutButton } from "../../components/LogOutButton";
 import { GET_PRODUCTS } from "../../graphql/Products.js"
 
 export function AllProductsPage(){
-
-
-
-
-
+    
     const { error, data, loading } = useQuery(GET_PRODUCTS);
     
 
