@@ -51,6 +51,7 @@ query getSingleProduct($productId: Int!){
     price,
     rentPrice
     rentDuration,
+    description,
 		categories {
 		  id,
       title
