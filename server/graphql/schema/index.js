@@ -54,6 +54,7 @@ export default buildSchema(`
         rentDuration: String
         created_at: ISODate!
         owner: User
+        buyer: User
         categories: [Category] 
     }
 
@@ -79,6 +80,7 @@ export default buildSchema(`
         clearAllCategories(productId: Int): Product
         updateProduct(productUpdateInput: ProductUpdateInput): Product
         deleteProduct(productId: Int): Product
+        buyProduct(productId: Int!, userId: Int!): Product
         createUser(userInput: UserInput): User
     }
 
