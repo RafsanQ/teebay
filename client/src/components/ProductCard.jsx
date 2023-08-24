@@ -1,10 +1,13 @@
 import { useMutation } from '@apollo/client';
-import { Button, Text } from '@mantine/core';
+import { Text } from '@mantine/core';
+import { useNavigate } from "react-router-dom";
 import { modals } from '@mantine/modals';
+import toast from 'react-hot-toast';
 import { DELETE_PRODUCT } from '../graphql/Products';
 
 export function ProductCard({product}){
-
+    
+    const navigate = useNavigate();
     const openModal = () => modals.openConfirmModal({
         title: 'Are you sure you want to delete this product?',
         centered: true,
@@ -27,12 +30,35 @@ export function ProductCard({product}){
     const [deleteProduct, {error, loading}] = useMutation(DELETE_PRODUCT);
 
     async function handleDelete(){
+
         await deleteProduct({
             variables: {
                 productId: parseInt(product.id)
-            }
+            },
         });
-        
+        navigate('/userproducts')
+        toast("Product deleted successfully");
+    }
+
+    function handleClick(e){
+        e.stopPropagation();
+        openModal();
+    }
+
+    if(error){
+        return (
+            <div className="card">
+                There was an error
+            </div>
+        )
+    }
+
+    if(loading){
+        return (
+            <div className="card">
+                Loading...
+            </div>
+        )
     }
 
     const ownerId = product.owner.id;
@@ -47,7 +73,7 @@ export function ProductCard({product}){
     let trashCanButton = null;
     if(ownerId === localStorage.getItem('userId')) {
         trashCanButton = (
-            <img src="/trash-bin.png" onClick={openModal} className="trashcan" alt="Logo" />
+            <img src="/trash-bin.png" onClick={handleClick} className="trashcan" alt="Logo" />
         );
     }
 
@@ -60,8 +86,17 @@ export function ProductCard({product}){
         categories = tempCategories.join(', ');
     }
 
+    function navigateToPage(){
+        if(ownerId === localStorage.getItem('userId')){
+            navigate("/userproducts/editproduct/" + product.id);
+        }
+        else{
+            navigate("viewproduct/" + product.id);
+        }
+    }
+
     return (
-        <div className="card">
+        <div className="card" onClick={navigateToPage}>
             <div className="rightSide" >
                 {trashCanButton}
             </div>

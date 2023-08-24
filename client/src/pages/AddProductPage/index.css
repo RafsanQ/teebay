@@ -1,0 +1,32 @@
+.card-addProduct{
+    width: clamp(40%, 40%, 20%);
+    padding: 1% 3%;
+    margin: 10% auto 2% auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.page{
+    width: clamp(90%, 80%, 50%);
+    margin: 8%;
+    align-items: center;
+    text-align: center;
+}
+
+.page .priceInput{
+    display: inline-block;
+    width: 55%;
+    margin: 2%;
+}
+
+.page .rentStuff{
+    margin: 2% 20%;
+}   
+
+.bottomSection Button {
+    margin: 0% 5%;
+}
+
+.page .summary{
+    color: grey
+}

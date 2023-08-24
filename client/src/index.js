@@ -16,9 +16,9 @@ root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <MantineProvider>
-        <ModalsProvider>
-          <App />
-        </ModalsProvider>
+          <ModalsProvider>
+            <App />
+          </ModalsProvider>
           
       </MantineProvider>
     </ApolloProvider>

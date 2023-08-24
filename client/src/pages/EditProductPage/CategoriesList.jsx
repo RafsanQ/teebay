@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from "@apollo/client";
 import Select from 'react-select';
-import { GET_ALL_PRODUCT_CATEGORIES, GET_THIS_PRODUCTS_CATEGORIES, GET_SINGLE_PRODUCT } from '../../graphql/Products';
+import { GET_ALL_PRODUCT_CATEGORIES, GET_THIS_PRODUCTS_CATEGORIES } from '../../graphql/Products';
 
 export function CategoriesList({productId, updateCategories}) {
 
@@ -82,7 +82,6 @@ export function CategoriesList({productId, updateCategories}) {
                 isSearchable={false}
                 options={allCategories}
                 onChange={handleCategoryChange}
-                
             />
 
         </div>

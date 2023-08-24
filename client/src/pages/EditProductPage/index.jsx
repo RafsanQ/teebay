@@ -76,7 +76,6 @@ export function EditProductPage(){
     }
 
     async function handleSave(values){
-        console.log({values, productid});
         await updateProduct({
             variables: {
                 productId: parseInt(productid),
@@ -116,7 +115,6 @@ export function EditProductPage(){
     return (
         
         <div className="card-noborder">
-            <Toaster/>
             <form onSubmit={form.onSubmit((values) => handleSave(values))}>
                 <TextInput
                 label="Title"

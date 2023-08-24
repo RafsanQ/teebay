@@ -118,3 +118,13 @@ mutation deleteProduct($productId: Int!){
   }
 }
 `
+
+export const CREATE_NEW_PRODUCT = gql`
+mutation createNewProduct($title: String!, $description: String, $price: Int!, $rentPrice: Int!, $rentDuration: String!, $userId: Int!){
+  createProduct(productInput: {title: $title, description: $description, price: $price, rentPrice: $rentPrice, rentDuration: $rentDuration, userId: $userId}){
+    id,
+    title,
+    description
+  }
+}
+`
