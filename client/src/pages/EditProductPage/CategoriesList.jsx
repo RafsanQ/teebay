@@ -82,7 +82,6 @@ export function CategoriesList({productId, updateCategories}) {
                 isSearchable={false}
                 options={allCategories}
                 onChange={handleCategoryChange}
-                
             />
 
         </div>

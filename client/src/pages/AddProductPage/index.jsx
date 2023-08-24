@@ -1,4 +1,3 @@
-import { Button, Title } from '@mantine/core';
 import { useState } from 'react';
 import { PageOne } from './PageOne';
 import { PageTwo } from './PageTwo';
@@ -13,54 +12,43 @@ import './index.css';
 export function AddProductForm() {
 
 
-    const [page, setPage] = useState(3);
+    // For keeping track of form data
+    const [formData, setFormData] = useState({
+        title: '',
+        descrition: '',
+        categories: [],
+        price: 0,
+        rentPrice: 0,
+        rentDuration: ''
+    });
 
+    function handleSubmit(){
+        
+    }
 
+    const [page, setPage] = useState(0);
     const PageRendered = () => {
         switch(page){
             case 0:
-                return <PageOne/>;
+                return <PageOne formData={formData} setFormData={setFormData} page={page} setPage={setPage} />;
             case 1:
-                return <PageTwo/>
+                return <PageTwo formData={formData} setFormData={setFormData} page={page} setPage={setPage} />
             case 2:
-                return <PageThree/>;
+                return <PageThree formData={formData} setFormData={setFormData} page={page} setPage={setPage} />;
             case 3:
-                return <PageFour/>;
+                return <PageFour formData={formData} setFormData={setFormData} page={page} setPage={setPage} />;
             case 4:
-                return <PageFive/>;
+                return <PageFive formData={formData} setFormData={setFormData} page={page} setPage={setPage} handleSubmit={handleSubmit}/>;
             default:
-                return <PageOne/>
+                return <PageOne formData={formData} setFormData={setFormData} page={page} setPage={setPage} handleSubmit={handleSubmit}/>
         }
     };
-
-    function handleSubmit(){
-        // Submit Form
-        if(page === 4){
-
-        }
-        // Next Page
-        else {
-            setPage(page+1);
-        }
-    }
-
 
     return (
         <div className='card-addProduct'>
             
             {<PageRendered/>}
 
-            <div className='bottomSection'>
-                {/* Next or submit button */}
-                <Button color='violet' onClick={handleSubmit}>
-                    { page < 4 ? 'Next' : 'Submit'}
-                </Button>
-                {/* Back Button */}
-                {
-                    page > 0 && <Button color='red' onClick={()=>setPage(page-1)}>Back</Button>
-                }
-                
-            </div>
         </div>
     );
 }
