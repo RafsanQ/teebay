@@ -8,9 +8,9 @@ import { UserProductsPage } from "./pages/UserProducts"
 
 import './App.css';
 import { EditProductPage } from "./pages/EditProductPage";
-import { AddProductForm } from "./pages/AddProductPage/index.jsx";
-import { ProdcutPage } from "./pages/ViewProductPage/index.jsx";
-
+import { AddProductForm } from "./pages/AddProductPage";
+import { ProdcutPage } from "./pages/ViewProductPage";
+import { ProfilePage } from "./pages/ProfilePage";
 
 function App() {
 
@@ -46,6 +46,7 @@ function App() {
             <Route path="/userproducts/editproduct/:productid" element={isLoggedIn ? <EditProductPage /> : <Navigate to='/' />} />
             <Route path="/products/viewproduct/:productid" element={isLoggedIn ? <EditProductPage /> : <Navigate to='/' />} />
             <Route path="/userproducts/addproduct" element={isLoggedIn ? <AddProductForm /> : <Navigate to='/' />} />
+            <Route path="/profile" element={isLoggedIn ? <ProfilePage /> : <Navigate to='/' />} />
           </Routes>
           <Toaster />
         </BrowserRouter>
