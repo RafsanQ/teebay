@@ -1,19 +1,20 @@
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useQuery, useMutation } from "@apollo/client";
 import { Button, Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
-import { useForm } from '@mantine/form';
 import toast from 'react-hot-toast';
 
-import { GET_SINGLE_PRODUCT } from "../../graphql/Products";
+import { GET_PRODUCTS, GET_SINGLE_PRODUCT } from "../../graphql/Products";
 
 import './index.css';
 import { RentForm } from "./RentForm";
+import { BUY_PRODUCT } from "../../graphql/buyRentProducts";
 
 
 export function ProdcutPage(){
     let { productid } = useParams();
 
+    const navigate = useNavigate();
     const openBuyModal = () => modals.openConfirmModal({
         title: 'Are you sure you want to buy this product?',
         centered: false,
@@ -31,7 +32,7 @@ export function ProdcutPage(){
     const openRentModal = () => modals.open({
         title: 'Pick the time period',
         children: (
-          <RentForm/>
+          <RentForm productId={productid} />
         ),
       });
 
@@ -40,7 +41,11 @@ export function ProdcutPage(){
             productId: parseInt(productid)
         },
     })
-
+    const [buyThisProduct] = useMutation( BUY_PRODUCT, {
+        refetchQueries: [
+          GET_PRODUCTS, // DocumentNode object parsed with gql
+        ],
+      });
 
     if(queryError) {
         console.log({ queryError });
@@ -86,8 +91,13 @@ export function ProdcutPage(){
 
 
     async function handleBuy(){
-        console.log('Buying');
-
+        await buyThisProduct({
+            variables: {
+                productId: parseInt(productid),
+                userId: parseInt(localStorage.getItem('userId'))
+            }
+        })
+        navigate('/products');
         toast(title + " Bought");
     }
 

@@ -16,6 +16,10 @@ export default {
     products: async () => {
         try{
             let products = await prisma.product.findMany({
+                where:{
+                    isBought: false,
+                    isRentedOut: false
+                },
                 include: {
                     owner: true,
                     categories: {
@@ -43,7 +47,8 @@ export default {
         try{
             const products = await prisma.product.findMany({
                 where: {
-                    ownerId: args.ownerId
+                    ownerId: args.ownerId,
+                    isBought: false
                 },
                 include: {
                     owner: true,
@@ -79,23 +84,14 @@ export default {
                         include: {
                             category: true
                         }
-                    }
+                    },
+                    buyer: true
                 }
             })
             
             // Because the required category information is nested, we flatten it and remove the redundant junction table values.
             product = flatenProductCategories(product);
             return product;
-        }catch(error){
-            console.error(error);
-            throw error;
-        }
-    },
-
-    users: async () => {
-        try{
-            const users = await prisma.user.findMany();
-            return users;
         }catch(error){
             console.error(error);
             throw error;

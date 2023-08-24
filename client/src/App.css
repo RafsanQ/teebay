@@ -83,6 +83,15 @@
   margin: 1% 5% ;
 }
 
+.leftSideButtons{
+  float: left;
+  margin: 1% 5% ;
+}
+
+.leftSideButtons Button{
+  width: 100%;
+}
+
 .rightSideButtons button{
   width: 100%;
 }

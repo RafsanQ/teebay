@@ -1,91 +1,142 @@
-# mutation{
-#   addCategory(productId: 5, categoryId: 2){
+# query{
+#   productsOwnedBy(ownerId: 2) {
 #     id,
 #     title,
-#     description,
-#     created_at,
-#     owner{
-#       email
+#     price,
+#     owner {
+#       id,
+#       name
 #     },
-#     categories{
+#     categories {
 #       id,
 #       title
 #     }
 #   }
 # }
 
-# query{
+# mutation{
+#   updateProduct(productUpdateInput: {id: 5, title: "Phone", description: "The best typical Cell phone ever", price: 15000, rentPrice: 500, rentDuration: "month"}){
+#     id,
+#     title,
+#     price,
+#     description,
+#     rentPrice,
+#     rentDuration,
+#     owner {
+#       id,
+#       name
+#     },
+  	
+#   }
+# }
+
+# query {
 #   getSingleProduct(productId: 5){
 #     id,
 #     title,
+#     price,
+#     rentPrice
+#     rentDuration,
 #     description,
-#     created_at,
-#     owner{
-#       email
-#     },
-#     categories{
-#       id,
+# 		categories {
+# 		  id,
 #       title
-#     }
+# 		}
 #   }
-# }
-
-query{
-  users {
-    id,
-    name,
-    email
-  }
-  # loginUser(email: "rafs2an.quayes@gmail.com", password: "9cd4c26428"){
-  #   userId,
-  #   token,
-  #   tokenExpiration
-  # }
-}
-
-# mutation{
-#   deleteProduct(productId: 1){
-#     id,
-#     title,
-#     description,
-#     created_at,
-
-#   }
-# }
-
-# mutation {
-#   createProduct(productInput: {title: "Laptop 2", description: "Typical Laptop", price: 60000, rentPrice: 800, rentDuration: "day", userId: 1}){
-# 		id,
-#     title,
-#     owner{
-#       id
-#     }
-#   }
-# }
-
-# mutation {
-#   createUser(userInput: {name: "rafsan", password: "123456", email: "rafsan.quayes@gmail.com", address: "Bd", phone: "12345678910"}){
-#     id,
-#     name,
-#     email
-#   }
-# }
-
+#}
 
 # query{
-#   products{
+#   getSingleProduct(productId:5){
+#     categories{
+#       id,
+#       title,
+#       created_at,
+#     }
+#   }
+# }
+
+# mutation {
+#   addCategory(productId: 5, categoryId: 3){
 #     id,
 #     title,
-#     description,
-#     created_at,
-#     owner{
+#     price,
+#     rentPrice,
+#     owner {
+#       id,
+#       name,
 #       email
 #     },
 #     categories {
 #       id,
-#       title,
-#       created_at
+#       title
 #     }
+#   }
+# }
 
+# mutation {
+#   removeCategory(productId: 5, categoryId: 2){
+#     id,
+#     title,
+#     price,
+#     owner {
+#       id
+#     },
+#     categories {
+#       id,
+#       title
+#     }
+#   }
+# }
+# mutation{
+#   clearAllCategories(productId: 5){
+#     id,
+#     title,
+#     owner{
+#       id,
+#       name,
+#       email
+#     },
+#     price,
+#     rentPrice,
+#     rentDuration,
+#     description,
+#     categories{
+#       id,
+#       title
+#     }
+#   }
+# }
+
+# mutation {
+#   createProduct(productInput: {title: "demo3", description: "demo Description", price: 1500, rentPrice: 25, rentDuration: "month", userId: 2}){
+#     id,
+#     owner{
+#       email
+#     },
+#     title,
+#     description
+#   }
+# }
+
+# mutation {
+#   deleteProduct(productId: 11){
+#     id,
+#     owner{
+#       email
+#     },
+#     title,
+#     description
+#   }
+# }
+
+# query{
+#   products {
+#     id,
+#     title,
+#     categories {
+#       id,
+#       title
+#     },
+#     created_at
 #   }
 # }
