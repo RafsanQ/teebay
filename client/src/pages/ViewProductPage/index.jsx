@@ -5,10 +5,11 @@ import { modals } from '@mantine/modals';
 import { useForm } from '@mantine/form';
 import toast from 'react-hot-toast';
 
-import { GET_SINGLE_PRODUCT } from "../../graphql/Products";
+import { GET_PRODUCTS, GET_SINGLE_PRODUCT } from "../../graphql/Products";
 
 import './index.css';
 import { RentForm } from "./RentForm";
+import { BUY_PRODUCT } from "../../graphql/buyRentProducts";
 
 
 export function ProdcutPage(){
@@ -40,7 +41,11 @@ export function ProdcutPage(){
             productId: parseInt(productid)
         },
     })
-
+    const [buyThisProduct] = useMutation( BUY_PRODUCT, {
+        refetchQueries: [
+          GET_PRODUCTS, // DocumentNode object parsed with gql
+        ],
+      });
 
     if(queryError) {
         console.log({ queryError });
@@ -86,7 +91,12 @@ export function ProdcutPage(){
 
 
     async function handleBuy(){
-        console.log('Buying');
+        await buyThisProduct({
+            variables: {
+                productId: parseInt(productid),
+                userId: parseInt(localStorage.getItem('userId'))
+            }
+        })
 
         toast(title + " Bought");
     }
