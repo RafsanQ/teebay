@@ -116,7 +116,6 @@ export function EditProductPage(){
     return (
         
         <div className="card-noborder">
-            <Toaster/>
             <form onSubmit={form.onSubmit((values) => handleSave(values))}>
                 <TextInput
                 label="Title"

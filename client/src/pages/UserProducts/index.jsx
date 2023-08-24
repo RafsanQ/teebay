@@ -45,7 +45,9 @@ export function UserProductsPage(){
             ))}
 
             <div className="bottomSection">
-                <Button color="violet">Add Product</Button>
+                <Link to="addproduct">
+                    <Button  color="violet">Add Product</Button>
+                </Link>
             </div>
             
         </div>

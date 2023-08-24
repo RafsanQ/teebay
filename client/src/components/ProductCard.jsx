@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { Button, Text } from '@mantine/core';
+import { Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { DELETE_PRODUCT } from '../graphql/Products';
 
@@ -42,6 +42,22 @@ export function ProductCard({product}){
     function handleClick(e){
         e.stopPropagation();
         openModal();
+    }
+
+    if(error){
+        return (
+            <div className="card">
+                There was an error
+            </div>
+        )
+    }
+
+    if(loading){
+        return (
+            <div className="card">
+                Loading...
+            </div>
+        )
     }
 
     const ownerId = product.owner.id;
