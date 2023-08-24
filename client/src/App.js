@@ -7,7 +7,7 @@ import { UserProductsPage } from "./pages/UserProducts"
 
 import './App.css';
 import { EditProductPage } from "./pages/EditProductPage";
-
+import { AddProductForm } from "./pages/AddProductPage/index.jsx";
 
 
 function App() {
@@ -41,6 +41,7 @@ function App() {
             <Route path="/products" element={isLoggedIn ? <AllProductsPage /> : <Navigate to='/' />} />
             <Route path="/userproducts" element={isLoggedIn ? <UserProductsPage /> : <Navigate to='/' />} />
             <Route path="/userproducts/editproduct/:productid" element={isLoggedIn ? <EditProductPage /> : <Navigate to='/' />} />
+            <Route path="/userproducts/addproduct" element={isLoggedIn ? <EditProductPage /> : <Navigate to='/' />} />
           </Routes>
         </BrowserRouter>
     </div>

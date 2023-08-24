@@ -27,12 +27,21 @@ export function ProductCard({product}){
     const [deleteProduct, {error, loading}] = useMutation(DELETE_PRODUCT);
 
     async function handleDelete(){
+
         await deleteProduct({
             variables: {
                 productId: parseInt(product.id)
+            },
+            onCompleted(){
+                console.log("Product deleted");
             }
         });
         
+    }
+
+    function handleClick(e){
+        e.stopPropagation();
+        openModal();
     }
 
     const ownerId = product.owner.id;
@@ -47,7 +56,7 @@ export function ProductCard({product}){
     let trashCanButton = null;
     if(ownerId === localStorage.getItem('userId')) {
         trashCanButton = (
-            <img src="/trash-bin.png" onClick={openModal} className="trashcan" alt="Logo" />
+            <img src="/trash-bin.png" onClick={handleClick} className="trashcan" alt="Logo" />
         );
     }
 
