@@ -52,10 +52,15 @@ query getSingleProduct($productId: Int!){
     rentPrice
     rentDuration,
     description,
+    owner{
+      name,
+      email
+    }
 		categories {
 		  id,
       title
-		}
+		},
+    created_at
   }
 }
 `
