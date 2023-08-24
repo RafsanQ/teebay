@@ -7,7 +7,6 @@ export function PageTwo({
     setFormData,
     page,
     setPage,
-    handleSubmit,
 }) {
 
 

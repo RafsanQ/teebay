@@ -40,7 +40,6 @@ export function PageThree({
 
     function handleCategoryUpdate(value){
         setCurrentCatagories(value);
-        console.log(currentCatagories);
     }
 
     async function handleNextPage() {

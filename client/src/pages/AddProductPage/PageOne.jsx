@@ -1,10 +1,15 @@
 import { Title, TextInput, Button } from "@mantine/core";
 import { useState } from "react";
+import toast from 'react-hot-toast';
 
 export function PageOne({ formData, setFormData, page, setPage }) {
     const [inputTitle, setInputTitle] = useState(formData.title);
 
     function handleNextPage() {
+        if(inputTitle.trim().length === 0) {
+          toast("Enter a valid title");
+          return;
+        }
         setPage(page + 1);
         setFormData({
           ...formData,

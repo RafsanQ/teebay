@@ -89,7 +89,8 @@
 
 .bottomSection{
   width: clamp(36%, 36%, 10%);
-  margin: 1% auto 1% auto;
+  margin: 2% auto;
+  padding: 0% 1% 5% 0%;
 }
 
 .bottomSection Button{

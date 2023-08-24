@@ -30,10 +30,10 @@ export default buildSchema(`
     input ProductInput {
         title: String!
         description: String
-        price: Int
-        rentPrice: Int
-        rentDuration: String
-        userId: Int
+        price: Int!
+        rentPrice: Int!
+        rentDuration: String!
+        userId: Int!
     }
 
     input ProductUpdateInput {

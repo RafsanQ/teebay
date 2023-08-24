@@ -1,15 +1,24 @@
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import { useMutation } from '@apollo/client';
+
 import { PageOne } from './PageOne';
 import { PageTwo } from './PageTwo';
 import { PageThree } from './PageThree';
 import { PageFour } from './PageFour';
 import { PageFive } from './PageFive';
+import toast from 'react-hot-toast';
 
 import './index.css';
+import { ADD_CATEGORY, CREATE_NEW_PRODUCT } from '../../graphql/Products';
 
 
 
 export function AddProductForm() {
+
+    const navigate = useNavigate();
+    const [createNewProduct] = useMutation(CREATE_NEW_PRODUCT);
+    const [addCategory] = useMutation(ADD_CATEGORY);
 
 
     // For keeping track of form data
@@ -22,8 +31,42 @@ export function AddProductForm() {
         rentDuration: ''
     });
 
-    function handleSubmit(){
-        
+    async function handleSubmit(){
+        try {
+            const { data } = await createNewProduct({
+                variables: {
+                    title: formData.title,
+                    descrition: formData.descrition,
+                    price: formData.price,
+                    rentPrice: formData.rentPrice,
+                    rentDuration: formData.rentDuration,
+                    userId: parseInt(localStorage.getItem("userId"))
+                }
+            });
+            
+            console.log({data});
+            const newProductId = parseInt(data.createProduct.id);
+            if(formData.categories.length > 0){  
+                for(const category of formData.categories){
+                    await addCategory({
+                        variables: {
+                            productId: newProductId,
+                            categoryId: parseInt(category.value)
+                        },
+                        onError(error){
+                            console.log(error);
+                            toast("Categories were not asssigned :)");
+                        }
+                    })
+                }
+            }
+            navigate('/userproducts');
+            toast("New Product Added!");
+            
+        }catch(error){
+            toast("We ran into an error while creating new product");
+            console.log({error});
+        }
     }
 
     const [page, setPage] = useState(0);
@@ -46,9 +89,7 @@ export function AddProductForm() {
 
     return (
         <div className='card-addProduct'>
-            
             {<PageRendered/>}
-
         </div>
     );
 }

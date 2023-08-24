@@ -76,7 +76,6 @@ export function EditProductPage(){
     }
 
     async function handleSave(values){
-        console.log({values, productid});
         await updateProduct({
             variables: {
                 productId: parseInt(productid),

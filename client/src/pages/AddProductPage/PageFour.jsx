@@ -1,5 +1,7 @@
 import { Title, NumberInput, Grid, Select, Button } from "@mantine/core";
 import { useState } from "react";
+import toast from 'react-hot-toast';
+
 
 export function PageFour({
     formData,
@@ -11,6 +13,11 @@ export function PageFour({
     const [ priceInfo, setPriceInfo] = useState( {price: formData.price, rentPrice: formData.rentPrice, rentDuration: formData.rentDuration } )
 
     async function handleNextPage() {
+      if(priceInfo.price == 0 || priceInfo.rentPrice == 0 || priceInfo.rentDuration == ""){
+        toast('Please fill out all the information');
+        return;
+      }
+
       setFormData({
           ...formData,
           price: priceInfo.price,
