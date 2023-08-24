@@ -10,7 +10,7 @@ import { PageFive } from './PageFive';
 import toast from 'react-hot-toast';
 
 import './index.css';
-import { ADD_CATEGORY, CREATE_NEW_PRODUCT } from '../../graphql/Products';
+import { ADD_CATEGORY, CREATE_NEW_PRODUCT, GET_PRODUCTS, GET_PRODUCTS_BY_USER, GET_THIS_PRODUCTS_CATEGORIES } from '../../graphql/Products';
 
 
 
@@ -41,10 +41,14 @@ export function AddProductForm() {
                     rentPrice: formData.rentPrice,
                     rentDuration: formData.rentDuration,
                     userId: parseInt(localStorage.getItem("userId"))
-                }
+                },
+                refetchQueries: [
+                    GET_PRODUCTS,
+                    GET_PRODUCTS_BY_USER,
+                    GET_THIS_PRODUCTS_CATEGORIES,
+                ],
             });
             
-            console.log({data});
             const newProductId = parseInt(data.createProduct.id);
             if(formData.categories.length > 0){  
                 for(const category of formData.categories){
