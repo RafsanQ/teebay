@@ -45,7 +45,6 @@ export default {
     rentOut: async (args) => {
         const productId = args.productId;
         const userId = parseInt(args.userId);
-        console.log(typeof(userId));
         const startDate = args.startDate;
         const endDate = args.endDate;
         try{
@@ -72,6 +71,39 @@ export default {
                     }
                 }
             })
+            
+            updatedProduct = flatenProductCategories(updatedProduct);
+            return updatedProduct;
+        }catch(error){
+            console.log(error);
+            throw error;
+        }
+    },
+
+    finishRentOut: async (args) => {
+        const productId = args.productId;
+        try{
+            await prisma.rentOut.delete({
+                where: { productId: productId}
+            })
+
+            let updatedProduct = await prisma.product.update({
+                where: {
+                    id: productId
+                },
+                data: {
+                    isRentedOut: false
+                },
+                include: {
+                    owner: true,
+                    categories: {
+                        include: {
+                            category: true
+                        }
+                    }
+                }
+            })
+            
             updatedProduct = flatenProductCategories(updatedProduct);
             return updatedProduct;
         }catch(error){
