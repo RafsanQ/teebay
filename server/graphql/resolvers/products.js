@@ -17,7 +17,8 @@ export default {
         try{
             let products = await prisma.product.findMany({
                 where:{
-                    isBought: false
+                    isBought: false,
+                    isRentedOut: false
                 },
                 include: {
                     owner: true,
@@ -46,7 +47,8 @@ export default {
         try{
             const products = await prisma.product.findMany({
                 where: {
-                    ownerId: args.ownerId
+                    ownerId: args.ownerId,
+                    isBought: false
                 },
                 include: {
                     owner: true,

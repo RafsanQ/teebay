@@ -40,5 +40,43 @@ export default {
             console.log(error);
             throw error;
         }
+    },
+
+    rentOut: async (args) => {
+        const productId = args.productId;
+        const userId = parseInt(args.userId);
+        console.log(typeof(userId));
+        const startDate = args.startDate;
+        const endDate = args.endDate;
+        try{
+            let updatedProduct = await prisma.product.update({
+                where: {
+                    id: productId
+                },
+                data: {
+                    isRentedOut: true,
+                    rentOutRecord: {
+                        create: {
+                            renterId: userId,
+                            rentedOn: new Date(startDate),
+                            rentEnds: new Date(endDate)
+                        }
+                    }
+                },
+                include: {
+                    owner: true,
+                    categories: {
+                        include: {
+                            category: true
+                        }
+                    }
+                }
+            })
+            updatedProduct = flatenProductCategories(updatedProduct);
+            return updatedProduct;
+        }catch(error){
+            console.log(error);
+            throw error;
+        }
     }
 }

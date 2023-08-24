@@ -81,6 +81,9 @@ export default buildSchema(`
         updateProduct(productUpdateInput: ProductUpdateInput): Product
         deleteProduct(productId: Int): Product
         buyProduct(productId: Int!, userId: Int!): Product
+        rentOut(productId: Int!, userId: Int!, startDate: ISODate!, endDate: ISODate!): Product
+        finishRentOut(productId: Int!): Product
+        
         createUser(userInput: UserInput): User
     }
 
