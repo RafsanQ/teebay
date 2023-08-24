@@ -18,20 +18,25 @@ model User {
   address     String
   phoneNumber String
 
-  ownedProducts Product[]
+  ownedProducts  Product[] @relation("OwnedBy")
+  boughtProducts Product[] @relation("BoughtBy")
 }
 
 model Product {
-  id           Int                   @id @default(autoincrement())
-  title        String                @unique
-  description  String                @default("A simple Product")
-  price        Int                   @default(99)
-  rentPrice    Int                   @default(19)
-  rentDuration String                @default("hour")
-  created_at   DateTime              @default(now()) @db.Date
-  owner        User                  @relation(fields: [ownerId], references: [id])
+  id           Int      @id @default(autoincrement())
+  title        String   @unique
+  description  String   @default("A simple Product")
+  price        Int      @default(99)
+  rentPrice    Int      @default(19)
+  rentDuration String   @default("hour")
+  created_at   DateTime @default(now()) @db.Date
+  owner        User     @relation("OwnedBy", fields: [ownerId], references: [id])
   ownerId      Int
-  categories   CatagoriesOnProduct[]
+  isBought     Boolean  @default(false)
+  buyer        User?    @relation("BoughtBy", fields: [buyerId], references: [id])
+  buyerId      Int?
+
+  categories CatagoriesOnProduct[]
 }
 
 model Catagory {

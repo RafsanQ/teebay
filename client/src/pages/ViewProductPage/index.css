@@ -1,0 +1,45 @@
+.card-viewProduct{
+    width: clamp(50%, 50%, 30%);
+    padding: 3%;
+    margin: 10% auto 2% auto;
+    text-align: left;
+    align-items: left;
+}
+
+.card-viewProduct h2{
+    color: black;
+    font-weight: lighter;
+}
+
+.card-viewProduct .categories,.price{
+    color: rgb(136, 136, 136);
+    font-weight: bold;
+}
+
+.card-viewProduct .date{
+    color: rgb(136, 136, 136);
+    font-weight: lighter;
+}
+
+.card-viewProduct .description{
+    min-height: 10vh;
+    margin: 5% 0% 2% 0%;
+}
+
+.card-viewProduct .bottomSection{
+    margin-top: 10%;
+    float: right;
+}
+
+.modal{
+    overflow: hidden;
+}
+
+.bottomSectionModal{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    text-align: center;
+    margin: 4% 2%;
+}
+

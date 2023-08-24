@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom"
 import { useQuery, useMutation } from "@apollo/client";
 import { TextInput, Button, Textarea, NumberInput, Grid, Select } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 import { GET_SINGLE_PRODUCT, UPDATE_PRODUCT, ADD_CATEGORY, CLEAR_ALL_CATEGORIES } from "../../graphql/Products.js"
 
@@ -64,7 +64,6 @@ export function EditProductPage(){
             
             <div className="card-noborder">
                 <h3>Error Getting Product</h3>
-                <Toaster/>
             </div>
         )
     }
