@@ -32,7 +32,7 @@ export function ProdcutPage(){
     const openRentModal = () => modals.open({
         title: 'Pick the time period',
         children: (
-          <RentForm/>
+          <RentForm productId={productid} />
         ),
       });
 
