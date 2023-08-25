@@ -73,6 +73,7 @@ export default buildSchema(`
         loginUser (email: String, password: String): AuthData! 
         getBoughtProducts (userId: Int): [Product]
         getSoldProducts (userId: Int): [Product]
+        getBorrowedProducts (userId: Int): [Product]
     }
 
     type RootMutation {
