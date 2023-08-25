@@ -31,6 +31,15 @@ export function UserProductsPage(){
                     </Button>
                 </Link>
             </div>
+
+            <div className="leftSideButtons">
+                <Link to="/profile">
+                    <Button className='leftSideButtons' color="violet" uppercase>
+                        My Profile
+                    </Button>
+                </Link>
+            </div>
+
             <h2 className="pageTitle">My Products</h2>
 
             {products.map(product => (
