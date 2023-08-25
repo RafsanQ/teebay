@@ -4,6 +4,8 @@ import { Group, Button } from '@mantine/core';
 import { useMutation } from '@apollo/client';
 import { RENT_PRODUCT } from '../../graphql/buyRentProducts';
 import { GET_PRODUCTS, GET_PRODUCTS_BY_USER } from './../../graphql/Products';
+import { GET_BORROWED_PRODUCTS, GET_BOUGHT_PRODUCTS, GET_LENT_PRODUCTS, GET_SOLD_PRODUCTS } from "../../graphql/buyRentProducts";
+ 
 import toast from 'react-hot-toast';
 
 export function RentForm({productId}) {
@@ -12,8 +14,13 @@ export function RentForm({productId}) {
 
   const [rentThisProduct] = useMutation(RENT_PRODUCT, {
     refetchQueries: [
-      GET_PRODUCTS,
-      GET_PRODUCTS_BY_USER
+      GET_PRODUCTS_BY_USER,
+      GET_PRODUCTS, // DocumentNode object parsed with gql
+      GET_BORROWED_PRODUCTS,
+      GET_BOUGHT_PRODUCTS,
+      GET_LENT_PRODUCTS,
+      GET_PRODUCTS_BY_USER,
+      GET_SOLD_PRODUCTS
     ]
   });
 
