@@ -4,11 +4,11 @@ import { Button, Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import toast from 'react-hot-toast';
 
-import { GET_PRODUCTS, GET_SINGLE_PRODUCT } from "../../graphql/Products";
+import { GET_PRODUCTS, GET_PRODUCTS_BY_USER, GET_SINGLE_PRODUCT } from "../../graphql/Products";
 
 import './index.css';
 import { RentForm } from "./RentForm";
-import { BUY_PRODUCT } from "../../graphql/buyRentProducts";
+import { BUY_PRODUCT, GET_BORROWED_PRODUCTS, GET_BOUGHT_PRODUCTS, GET_LENT_PRODUCTS, GET_SOLD_PRODUCTS } from "../../graphql/buyRentProducts";
 
 
 export function ProdcutPage(){
@@ -43,7 +43,12 @@ export function ProdcutPage(){
     })
     const [buyThisProduct] = useMutation( BUY_PRODUCT, {
         refetchQueries: [
-          GET_PRODUCTS, // DocumentNode object parsed with gql
+            GET_PRODUCTS, // DocumentNode object parsed with gql
+            GET_BORROWED_PRODUCTS,
+            GET_BOUGHT_PRODUCTS,
+            GET_LENT_PRODUCTS,
+            GET_PRODUCTS_BY_USER,
+            GET_SOLD_PRODUCTS    
         ],
       });
 

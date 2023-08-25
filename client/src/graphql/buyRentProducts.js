@@ -51,15 +51,23 @@ query getSoldProducts($userId: Int!){
 export const GET_BORROWED_PRODUCTS = gql`
 query getBorrowedProducts($userId: Int!){
     getBorrowedProducts(userId: $userId) {
-        id,
-        title,
-        price,
-        rentPrice,
-        rentDuration,
-        categories{
+      id,
+      title,
+      categories{
         title
-        },
-        created_at
+      },
+      owner{
+        email
+      },
+      created_at,
+      rentOutRecord{
+        product{
+          id,
+          title
+        }
+        rentedOn,
+        rentEnds
+      }
     }
 }
 `

@@ -18,7 +18,7 @@ export function BorrowedProducts(){
     return (
         <div>
             {products.map(product => (
-                <StillProductCard key={product.id} product={product}/>
+                <StillProductCard key={product.id} product={product} isBorrowing={true}/>
             ))}
             
         </div>

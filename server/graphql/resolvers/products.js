@@ -48,7 +48,8 @@ export default {
             const products = await prisma.product.findMany({
                 where: {
                     ownerId: args.ownerId,
-                    isBought: false
+                    isBought: false,
+                    isRentedOut: false
                 },
                 include: {
                     owner: true,
