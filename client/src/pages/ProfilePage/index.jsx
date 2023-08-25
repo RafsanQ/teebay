@@ -1,5 +1,6 @@
 import { Tabs } from '@mantine/core';
 import { BoughtProducts } from './BoughtProducts';
+import { SoldProducts } from './SoldProducts';
 
 export function ProfilePage() {
   return (
@@ -16,7 +17,7 @@ export function ProfilePage() {
       </Tabs.Panel>
 
       <Tabs.Panel value="Sold" pt="xs">
-        Messages tab content
+        <SoldProducts/>
       </Tabs.Panel>
 
       <Tabs.Panel value="Borrowed" pt="xs">

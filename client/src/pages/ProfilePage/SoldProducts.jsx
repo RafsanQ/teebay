@@ -1,10 +1,10 @@
 import { useQuery } from "@apollo/client";
-import { GET_BOUGHT_PRODUCTS } from "../../graphql/buyRentProducts.js"
+import { GET_SOLD_PRODUCTS } from "../../graphql/buyRentProducts.js"
 import { StillProductCard } from "./StillProductCard";
 
-export function BoughtProducts(){
+export function SoldProducts(){
     
-    const { error, data, loading } = useQuery(GET_BOUGHT_PRODUCTS, {
+    const { error, data, loading } = useQuery(GET_SOLD_PRODUCTS, {
         variables: {
             userId: parseInt(localStorage.getItem("userId"))
         }
@@ -14,13 +14,12 @@ export function BoughtProducts(){
 
     if(error) return <div className="card">Error</div>
 
-    const products = data.getBoughtProducts || [];
+    const products = data.getSoldProducts || [];
     return (
         <div>
             {products.map(product => (
                 <StillProductCard key={product.id} product={product}/>
             ))}
-            
         </div>
     );
 }

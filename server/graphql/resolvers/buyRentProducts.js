@@ -131,7 +131,36 @@ export default {
             products.forEach(product => {
                 product = flatenProductCategories(product);
             });
-            
+
+            return products;
+        }catch(error){
+            console.log(error);
+            throw error;
+        }
+    },
+    
+    getSoldProducts: async (args) => {
+        const userId = args.userId;
+        try{
+            let products = await prisma.product.findMany({
+                where: {
+                    ownerId: userId,
+                    isBought: true
+                },
+                include: {
+                    owner: true,
+                    categories: {
+                        include: {
+                            category: true
+                        }
+                    }
+                }
+            })
+
+            products.forEach(product => {
+                product = flatenProductCategories(product);
+            });
+
             return products;
         }catch(error){
             console.log(error);
