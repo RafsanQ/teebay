@@ -1,4 +1,5 @@
 import { Tabs } from '@mantine/core';
+import { BoughtProducts } from './BoughtProducts';
 
 export function ProfilePage() {
   return (
@@ -11,7 +12,7 @@ export function ProfilePage() {
       </Tabs.List>
 
       <Tabs.Panel value="bought" pt="xs">
-        Bouht tab content
+        <BoughtProducts />
       </Tabs.Panel>
 
       <Tabs.Panel value="Sold" pt="xs">

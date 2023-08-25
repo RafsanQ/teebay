@@ -15,3 +15,7 @@ mutation rentProduct($productId: Int!, $userId: Int!, $startDate: ISODate!, $end
     }
 }
 `
+
+export const GET_BOUGHT_PRODUCTS = gql`
+
+`
