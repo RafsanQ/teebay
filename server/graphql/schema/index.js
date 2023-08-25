@@ -74,6 +74,7 @@ export default buildSchema(`
         getBoughtProducts (userId: Int): [Product]
         getSoldProducts (userId: Int): [Product]
         getBorrowedProducts (userId: Int): [Product]
+        getLentProducts (userId: Int): [Product]
     }
 
     type RootMutation {

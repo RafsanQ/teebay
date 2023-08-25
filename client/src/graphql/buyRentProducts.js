@@ -27,10 +27,6 @@ query getBoughtProducts($userId: Int!){
     categories{
       title
     },
-    owner{
-      name,
-      email
-    },
     created_at
   }
 }
@@ -47,9 +43,6 @@ query getSoldProducts($userId: Int!){
     categories{
       title
     },
-    owner{
-      email
-    },
     created_at
   }
 }
@@ -58,18 +51,31 @@ query getSoldProducts($userId: Int!){
 export const GET_BORROWED_PRODUCTS = gql`
 query getBorrowedProducts($userId: Int!){
     getBorrowedProducts(userId: $userId) {
-    id,
-    title,
-    price,
-    rentPrice,
-    rentDuration,
-    categories{
-      title
-    },
-    owner{
-      email
-    },
-    created_at
-  }
+        id,
+        title,
+        price,
+        rentPrice,
+        rentDuration,
+        categories{
+        title
+        },
+        created_at
+    }
+}
+`
+
+export const GET_LENT_PRODUCTS = gql`
+query getLentProducts($userId: Int!){
+    getLentProducts(userId: $userId) {
+        id,
+        title,
+        price,
+        rentPrice,
+        rentDuration,
+        categories{
+        title
+        },
+        created_at
+    }
 }
 `

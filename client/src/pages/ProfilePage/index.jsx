@@ -2,6 +2,7 @@ import { Tabs } from '@mantine/core';
 import { BoughtProducts } from './BoughtProducts';
 import { SoldProducts } from './SoldProducts';
 import { BorrowedProducts } from './BorrowedProducts';
+import { LentProducts } from './LentProducts';
 
 export function ProfilePage() {
   return (
@@ -26,7 +27,7 @@ export function ProfilePage() {
       </Tabs.Panel>
 
       <Tabs.Panel value="lent" pt="xs">
-        Settings tab content
+        <LentProducts/>
       </Tabs.Panel>
     </Tabs>
   );

@@ -111,7 +111,7 @@ export default {
             throw error;
         }
     },
-    
+
     getBoughtProducts: async (args) => {
         const userId = args.userId;
         try{
@@ -178,6 +178,35 @@ export default {
                     rentOutRecord: {
                         renterId: userId
                     }
+                },
+                include: {
+                    owner: true,
+                    categories: {
+                        include: {
+                            category: true
+                        }
+                    }
+                }
+            })
+
+            products.forEach(product => {
+                product = flatenProductCategories(product);
+            });
+
+            return products;
+        }catch(error){
+            console.log(error);
+            throw error;
+        }
+    },
+
+    getLentProducts: async (args) => {
+        const userId = args.userId;
+        try{
+            let products = await prisma.product.findMany({
+                where: {
+                    isRentedOut: true,
+                    ownerId: userId
                 },
                 include: {
                     owner: true,
