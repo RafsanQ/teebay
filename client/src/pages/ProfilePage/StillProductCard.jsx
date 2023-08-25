@@ -1,6 +1,6 @@
+import { Button } from '@mantine/core';
 
-export function StillProductCard({product}){
-    
+export function StillProductCard({product, isBorrowing}){
     
     function parseISOString(s) {
         var b = s.split(/\D+/);
@@ -15,6 +15,12 @@ export function StillProductCard({product}){
     const rentDuration = product.rentDuration;
     const datePosted = parseISOString(product.created_at).toString().substring(0,15);
 
+    let timeIsUp = false;
+    if(isBorrowing){
+        if(new Date() > product.rentOutRecord.rentEnds){
+            timeIsUp = true;
+        }
+    }
 
 
     if(categories.length > 0){
@@ -29,6 +35,18 @@ export function StillProductCard({product}){
 
     return (
         <div className="card">
+            {
+                timeIsUp && 
+                (
+                    <div className="rightSide" >
+                        <Button color='violet'>
+                            Return
+                        </Button>
+                    </div>
+                )
+            }
+            
+
             <div className="leftSide">
                 <h2>{productTitle}</h2>
                 

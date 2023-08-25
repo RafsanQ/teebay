@@ -56,6 +56,14 @@ export default buildSchema(`
         owner: User
         buyer: User
         categories: [Category] 
+        rentOutRecord: RentOutRecord
+    }
+
+    type RentOutRecord{
+        product: Product!,
+        user: User!,
+        rentedOn: ISODate!,
+        rentEnds: ISODate!
     }
 
     type Category {

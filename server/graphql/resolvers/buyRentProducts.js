@@ -185,6 +185,11 @@ export default {
                         include: {
                             category: true
                         }
+                    },
+                    rentOutRecord: {
+                        include: {
+                            product: true,
+                        }
                     }
                 }
             })
