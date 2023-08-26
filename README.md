@@ -39,7 +39,7 @@ npx migrate dev
 Before you start the application, do note that you will need to create the categories inside the `Category` table. The front end UI has no way to add these categories :)
 You can even use Prisma Studio to do this. Start it with
 ```
-npx prisma studio
+npx prisma migrate dev
 ```
 
 Once you are done, run the following command to start the back end server.
