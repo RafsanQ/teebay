@@ -80,7 +80,7 @@ The demo can be found [here](https://drive.google.com/file/d/1dYn-zjO05VbPUEM16Y
 
 The diagram illustrates a high level design of the application.
 
-![alt text](./TeebayArchitecture.png)
+![alt text](./architecture.png)
 
 ### Database
 
