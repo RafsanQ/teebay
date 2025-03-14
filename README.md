@@ -55,7 +55,7 @@ Before you start the application, do note that you will need to create the categ
 You can even use Prisma Studio to do this. Start it with
 
 ```
-npx prisma studio
+npx prisma migrate dev
 ```
 
 Once you are done, run the following command to start the back end server.
@@ -65,6 +65,16 @@ npm start
 ```
 
 With both the `client` and `server` running on two terminals, go to [localhost:3000](http://localhost:3000). There create an account and sign.
+
+## Video Demo
+
+The demo can be found [here](https://drive.google.com/file/d/1dYn-zjO05VbPUEM16YRESVJ1hF_Od5KY/view?usp=sharing)
+
+## Some bugs left to resolve
+
+1. Creating product does not add description and categories.
+2. Notifications are lagging behind.
+3. Sign Up page shows blank notification on success.
 
 ## Architecture
 

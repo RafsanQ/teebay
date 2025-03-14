@@ -24,7 +24,7 @@ export function AddProductForm() {
     // For keeping track of form data
     const [formData, setFormData] = useState({
         title: '',
-        descrition: '',
+        description: '',
         categories: [],
         price: 0,
         rentPrice: 0,
@@ -32,11 +32,12 @@ export function AddProductForm() {
     });
 
     async function handleSubmit(){
+        console.log(formData.description);
         try {
             const { data } = await createNewProduct({
                 variables: {
                     title: formData.title,
-                    descrition: formData.descrition,
+                    description: formData.description,
                     price: formData.price,
                     rentPrice: formData.rentPrice,
                     rentDuration: formData.rentDuration,

@@ -1,8 +1,8 @@
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
-function flatenProductCategories(product){
-    product.categories.forEach(thisElement => {
+function flattenProductCategories(product) {
+    product.categories.forEach((thisElement) => {
         thisElement.id = thisElement.category.id;
         thisElement.title = thisElement.category.title;
         delete thisElement.category;
@@ -13,30 +13,29 @@ function flatenProductCategories(product){
 }
 
 export default {
-
     buyProduct: async (args) => {
         const { productId, userId } = args;
-        try{
+        try {
             let updatedProduct = await prisma.product.update({
                 where: {
-                    id: productId
+                    id: productId,
                 },
                 data: {
                     isBought: true,
-                    buyerId: userId
+                    buyerId: userId,
                 },
                 include: {
                     owner: true,
                     categories: {
                         include: {
-                            category: true
-                        }
-                    }
-                }
-            })
-            updatedProduct = flatenProductCategories(updatedProduct);
+                            category: true,
+                        },
+                    },
+                },
+            });
+            updatedProduct = flattenProductCategories(updatedProduct);
             return updatedProduct;
-        }catch(error){
+        } catch (error) {
             console.log(error);
             throw error;
         }
@@ -47,10 +46,10 @@ export default {
         const userId = parseInt(args.userId);
         const startDate = args.startDate;
         const endDate = args.endDate;
-        try{
+        try {
             let updatedProduct = await prisma.product.update({
                 where: {
-                    id: productId
+                    id: productId,
                 },
                 data: {
                     isRentedOut: true,
@@ -58,23 +57,23 @@ export default {
                         create: {
                             renterId: userId,
                             rentedOn: new Date(startDate),
-                            rentEnds: new Date(endDate)
-                        }
-                    }
+                            rentEnds: new Date(endDate),
+                        },
+                    },
                 },
                 include: {
                     owner: true,
                     categories: {
                         include: {
-                            category: true
-                        }
-                    }
-                }
-            })
-            
-            updatedProduct = flatenProductCategories(updatedProduct);
+                            category: true,
+                        },
+                    },
+                },
+            });
+
+            updatedProduct = flattenProductCategories(updatedProduct);
             return updatedProduct;
-        }catch(error){
+        } catch (error) {
             console.log(error);
             throw error;
         }
@@ -82,31 +81,31 @@ export default {
 
     finishRentOut: async (args) => {
         const productId = args.productId;
-        try{
+        try {
             await prisma.rentOut.delete({
-                where: { productId: productId}
-            })
+                where: { productId: productId },
+            });
 
             let updatedProduct = await prisma.product.update({
                 where: {
-                    id: productId
+                    id: productId,
                 },
                 data: {
-                    isRentedOut: false
+                    isRentedOut: false,
                 },
                 include: {
                     owner: true,
                     categories: {
                         include: {
-                            category: true
-                        }
-                    }
-                }
-            })
-            
-            updatedProduct = flatenProductCategories(updatedProduct);
+                            category: true,
+                        },
+                    },
+                },
+            });
+
+            updatedProduct = flattenProductCategories(updatedProduct);
             return updatedProduct;
-        }catch(error){
+        } catch (error) {
             console.log(error);
             throw error;
         }
@@ -114,56 +113,56 @@ export default {
 
     getBoughtProducts: async (args) => {
         const userId = args.userId;
-        try{
+        try {
             let products = await prisma.product.findMany({
                 where: {
-                    buyerId: userId
+                    buyerId: userId,
                 },
                 include: {
                     owner: true,
                     categories: {
                         include: {
-                            category: true
-                        }
-                    }
-                }
-            })
+                            category: true,
+                        },
+                    },
+                },
+            });
 
-            products.forEach(product => {
-                product = flatenProductCategories(product);
+            products.forEach((product) => {
+                product = flattenProductCategories(product);
             });
 
             return products;
-        }catch(error){
+        } catch (error) {
             console.log(error);
             throw error;
         }
     },
-    
+
     getSoldProducts: async (args) => {
         const userId = args.userId;
-        try{
+        try {
             let products = await prisma.product.findMany({
                 where: {
                     ownerId: userId,
-                    isBought: true
+                    isBought: true,
                 },
                 include: {
                     owner: true,
                     categories: {
                         include: {
-                            category: true
-                        }
-                    }
-                }
-            })
+                            category: true,
+                        },
+                    },
+                },
+            });
 
-            products.forEach(product => {
-                product = flatenProductCategories(product);
+            products.forEach((product) => {
+                product = flattenProductCategories(product);
             });
 
             return products;
-        }catch(error){
+        } catch (error) {
             console.log(error);
             throw error;
         }
@@ -171,35 +170,35 @@ export default {
 
     getBorrowedProducts: async (args) => {
         const userId = args.userId;
-        try{
+        try {
             let products = await prisma.product.findMany({
                 where: {
                     isRentedOut: true,
                     rentOutRecord: {
-                        renterId: userId
-                    }
+                        renterId: userId,
+                    },
                 },
                 include: {
                     owner: true,
                     categories: {
                         include: {
-                            category: true
-                        }
+                            category: true,
+                        },
                     },
                     rentOutRecord: {
                         include: {
                             product: true,
-                        }
-                    }
-                }
-            })
+                        },
+                    },
+                },
+            });
 
-            products.forEach(product => {
-                product = flatenProductCategories(product);
+            products.forEach((product) => {
+                product = flattenProductCategories(product);
             });
 
             return products;
-        }catch(error){
+        } catch (error) {
             console.log(error);
             throw error;
         }
@@ -207,31 +206,30 @@ export default {
 
     getLentProducts: async (args) => {
         const userId = args.userId;
-        try{
+        try {
             let products = await prisma.product.findMany({
                 where: {
                     isRentedOut: true,
-                    ownerId: userId
+                    ownerId: userId,
                 },
                 include: {
                     owner: true,
                     categories: {
                         include: {
-                            category: true
-                        }
-                    }
-                }
-            })
+                            category: true,
+                        },
+                    },
+                },
+            });
 
-            products.forEach(product => {
-                product = flatenProductCategories(product);
+            products.forEach((product) => {
+                product = flattenProductCategories(product);
             });
 
             return products;
-        }catch(error){
+        } catch (error) {
             console.log(error);
             throw error;
         }
-    }
-    
-}
+    },
+};

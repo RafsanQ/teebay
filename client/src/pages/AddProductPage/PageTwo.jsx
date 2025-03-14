@@ -18,6 +18,7 @@ export function PageTwo({
           ...formData,
           description: inputDescription
       });
+      console.log({ inputDescription, formData });
     }
 
     return (
